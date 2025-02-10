@@ -1,7 +1,7 @@
 <?php 
 echo 
 '
-<div class="relative flex justify-center items-center min-w-screen h-screen bg-indigo-500   ">
+<div style="background-image: url(\'./img/img2.jpg\'); background-size: cover; background-position: center; background-repeat: no-repeat;" class="relative flex justify-center items-center min-w-screen h-screen ">
         <div id="b" class="flex flex-col lg:flex-row h-4/5 w-4/5 bg-amber-50 rounded-2xl overflow-hidden border shadow-2xl shadow-black z-20 ">
             <div class="bg-white h-full w-full lg:w-2/5 lg:h-full flex flex-col p-4 gap-7">
                
@@ -51,7 +51,6 @@ echo
             <div class="bg-pink-400 w-0 lg:w-3/5 lg:h-full flex justify-center items-center">
                  <img src="./img/img2.jpg" class="w-full h-full " alt="">
             </div>
-
         </div>
     </div>
 ';

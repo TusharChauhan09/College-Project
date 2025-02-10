@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <div class="w-full h-[70px] flex justify-between items-center p-3  bg-gradient-to-r from-indigo-500 to-purple-900 border-2 ">
+    <div class="w-full h-[70px] flex justify-between items-center p-3  ">
       <!-- logo -->
 
       <div class=" flex justify-center items-center gap-[40px] ">

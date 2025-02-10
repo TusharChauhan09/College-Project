@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="relative flex justify-center items-center min-w-screen h-screen bg-indigo-500  ">
+    <div style="background-image: url('./img/img1.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" class="relative flex justify-center items-center min-w-screen h-screen bg-indigo-500  ">
         <div id="b" class="flex flex-col lg:flex-row h-4/5 w-4/5 bg-amber-50 rounded-2xl overflow-hidden border shadow-2xl shadow-black z-20  ">
             <div class="bg-white h-full w-full lg:w-2/5 lg:h-full flex flex-col p-4 gap-7">
                
@@ -59,7 +59,5 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./animation.js"></script>
-
-<script></script>
 </body>
 </html>
