@@ -101,5 +101,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-### ⭐ If you found this project useful, don't forget to give it a star!
+### 
 
