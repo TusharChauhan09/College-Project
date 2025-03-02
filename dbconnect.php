@@ -16,7 +16,5 @@ if(!$conn){
 //     echo 'Successfuly connected to the DB';
 // }
 
-
-
  
 ?>

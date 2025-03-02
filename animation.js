@@ -25,12 +25,19 @@ gsap.from("#a",{
 
 // nav bar
 
-gsap.from("#nav1 > div", {
-    y: -30,
-    opacity: 0,
-    duration: 2,
-    stagger: 0.3, // Each element animates 0.3s after the previous one
-    ease: "power2.out"
-  });
+// gsap.from("#nav1 > div", {
+//     y: -30,
+//     opacity: 0,
+//     duration: 2,
+//     stagger: 0.3, // Each element animates 0.3s after the previous one
+//     ease: "power2.out"
+//   });
+
+
+// about
+// blob
+
+
+
 
 
