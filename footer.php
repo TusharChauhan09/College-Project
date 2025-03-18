@@ -9,7 +9,7 @@
 </head>
 <body>
 <!-- Footer -->
-<footer class="bg-gray-900 text-gray-300 text-center text-lg-start  w-full">
+<footer class="bg-gray-900 text-gray-300 text-center text-lg-start  w-full  ">
     <!-- Section: Social media -->
     <section class="flex flex-col md:flex-row justify-center md:justify-between p-4 border-b border-gray-700">
         <!-- Left -->

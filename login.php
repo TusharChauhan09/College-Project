@@ -21,16 +21,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // $_SESSION["loggedin"] = true;
             // $_SESSION["email"] = $email;
             // header("location: index.php ");
-          if($password == $row["password"]){
-            $login = true;
-            session_start();
-            $_SESSION["loggedin"] = true;
-            $_SESSION["email"] = $email;
-            header("location: index.php ");
-          }
-          else{
-            $show_error = "Invalid Credentials";
-          }
+
+            if(password_verify($password, $row["password"])){
+                $login = true;
+                session_start();
+                $_SESSION["loggedin"] = true;
+                $_SESSION["email"] = $email;
+                header("location: about.php ");
+              }
+              else{
+                $show_error = "Invalid Credentials";
+              }
+
+        // non hashed  
+        //   if($password == $row["password"]){
+        //     $login = true;
+        //     session_start();
+        //     $_SESSION["loggedin"] = true;
+        //     $_SESSION["email"] = $email;
+
+        //     $_SESSION['email'] = $email;
+        //     header("location: about.php ");
+        //   }
+        //   else{
+        //     $show_error = "Invalid Credentials";
+        //   }
+
         }
     } else {
         $show_error = "Invalid Credentials or Need to Sign-up first";  

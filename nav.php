@@ -13,9 +13,9 @@
 <body class=" overflow-x-hidden">
 
   <div
-    class="fixed top-0 z-10  w-full h-[70px] flex justify-between  items-center p-3 bg-gray-900  text-white font-bold mb-[40px]  ">
+    class="fixed top-0 z-10  w-full h-[70px] flex justify-between  items-center p-3 bg-gray-900  text-white font-semibold  mb-[40px]  ">
     <!-- logo -->
-    <div id="nav" class="flex gap-[30px] text-xl">
+    <div id="nav" class="flex gap-[30px] text-md">
       <div class="">
         <i class="text-gray-300 hover:text-white fa-solid fa-droplet"></i>
       </div>
@@ -26,28 +26,29 @@
       <div class="">
         <a class="text-gray-300 hover:text-white" href="/project/about.php">About</a>
       </div>
+    </div>
+
+    <div id="nav" class=" flex justify-center items-center text-black gap-[40px]  text-md ">
+      <div class="flex ">
+        <div class="relative hidden md:block">
+          <input
+            class="w-[300px] border-2 border-black rounded-2xl p-2 bg-gray-700 text-gray-300 hover:bg-gray-800 pr-10"
+            type="text" placeholder="Search..." />
+          <div class="absolute top-[80%] right-3 transform -translate-y-1/2 text-xl text-gray-300">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+        </div>
+      </div>
+
       <div class="">
         <a class="text-gray-300 hover:text-white" href="/project/profile.php">Profile</a>
       </div>
-    </div>
 
-    <div class=" flex justify-center items-center text-black gap-[40px] ">
-      <div class="flex">
-        <div>
-          <input
-            class=" w-[300px] border-2 border-black  rounded-2xl p-2 bg-gray-700 text-gray-300 hover:bg-gray-800   mr-2"
-            type="text" placeholder="search...">
-        </div>
-        <div
-          class="nav flex w-[55px] justify-center items-center  bg-gray-700 text-gray-300 hover:bg-gray-800 e  rounded-full border-2 border-black ">
-          <div class="text-xl"><i class="fa-solid fa-magnifying-glass"></i></div>
-        </div>
-      </div>
-      <div>
-
-      </div>
       <a class="text-gray-300 hover:text-white" href="logout.php"> LogOut</a>
-    </div>
+
+    </div> 
+    
+  </div>
 
   </div>
 

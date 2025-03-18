@@ -34,10 +34,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = mysqli_prepare($conn, $sql);
             $status = ($permission == 0) ? 0 : 1;
             mysqli_stmt_bind_param($stmt, "ssssi", $name, $email, $hash, $status, $permission);
+            
+            // profile 
+            $query = "INSERT INTO application (a_date, a_email, a_role) VALUES (current_timestamp(), ?, ?)";
+            $stmt2 = mysqli_prepare($conn, $query);
+            $status2 = ($permission == 0) ? "Applicant" : "Recruiter"; 
+            mysqli_stmt_bind_param($stmt2, "ss", $email, $status2);
+            mysqli_stmt_execute($stmt2);
+
             if (mysqli_stmt_execute($stmt)) {
                 $show_alert = true;
 
-                header("location: index.php ");
+                $login = true;
+                session_start();
+                $_SESSION["loggedin"] = true;
+                $_SESSION["email"] = $email;
+                header("location: about.php ");
 
             } else {
                 $show_error = "Can't able to signUp: " . mysqli_error($conn);

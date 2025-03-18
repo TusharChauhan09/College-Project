@@ -1,17 +1,29 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="src/output.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-</head>
-<body class=" overflow-x-hidden ">
+<?php
+
+    echo '
     
-<div class="max-w-2xl w-full  mx-auto p-6 bg-gray-900 text-white rounded-3xl shadow-lg">
-    <form class="space-y-6">
+    <div class="max-w-2xl w-290  mx-auto p-6 bg-gray-900 text-white rounded-3xl shadow-lg">
+    <form action="/Project/profile.php" method="POST" enctype="multipart/form-data" class="space-y-6">
         <!-- Post Section -->
+        <!-- profile  -->
+        <label for="profile"   class="block text-sm font-medium mb-2">Upload Profile Pic</label>
+        <div class="relative mb-[100px]">
+            <input 
+                type="file" 
+                id="profile" 
+                name="profile" 
+                required
+                class="opacity-0 absolute w-full h-full cursor-pointer"
+            >
+            <button 
+                type="button"
+                class="px-6 py-2 bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+            >
+                Upload Profile Pic
+            </button>
+        </div>
+        <p class="mt-1 text-xs text-gray-400">JPG, PNG, JPEG</p>
+
         <div>
             <label for="post" class="block text-sm font-medium mb-2">Position Applying For</label>
             <input 
@@ -45,7 +57,6 @@
                     type="file" 
                     id="resume" 
                     name="resume" 
-                    accept="image/*"
                     required
                     class="opacity-0 absolute w-full h-full cursor-pointer"
                 >
@@ -65,7 +76,7 @@
         <!-- Submit Button -->
         <div class="text-center">
             <button 
-                type="submit"
+                type="submit" name="submit"
                 class="px-6 py-2 bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
             >
                 Submit
@@ -73,16 +84,7 @@
         </div>
     </form>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-
-</script>
-</body>
-</html>
-
-
-
-<!--  add this in profile  -->
-<!-- and add a change button to eddit it and remove session  -->
-<!-- if not session then only can be eddited else not -->
+    
+    
+    ';
+?>

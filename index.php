@@ -1,3 +1,8 @@
+<?php
+
+    require './auth.php';
+
+?>
 <!doctype html>
 <html>
 <head>
