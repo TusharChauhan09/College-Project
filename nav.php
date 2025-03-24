@@ -29,26 +29,19 @@
     </div>
 
     <div id="nav" class=" flex justify-center items-center text-black gap-[40px]  text-md ">
-      <div class="flex ">
-        <div class="relative hidden md:block">
-          <input
-            class="w-[300px] border-2 border-black rounded-2xl p-2 bg-gray-700 text-gray-300 hover:bg-gray-800 pr-10"
-            type="text" placeholder="Search..." />
-          <div class="absolute top-[80%] right-3 transform -translate-y-1/2 text-xl text-gray-300">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </div>
+      <div class="hidden md:block relative">
+        <input class="w-[300px] border-2 border-black rounded-2xl p-2 bg-gray-700 text-gray-300 hover:bg-gray-800 pr-10"
+          type="text" placeholder="Search..." />
+        <div class="absolute top-1/2 right-3 transform -translate-y-1/2 text-xl text-gray-300">
+          <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
         </div>
       </div>
+    </div>
 
-      <div class="">
-        <a class="text-gray-300 hover:text-white" href="/project/profile.php">Profile</a>
-      </div>
-
+    <div class="flex gap-5 ">
+      <a class="text-gray-300 hover:text-white" href="/project/profile.php">Profile</a>
       <a class="text-gray-300 hover:text-white" href="logout.php"> LogOut</a>
-
-    </div> 
-    
-  </div>
+    </div>
 
   </div>
 

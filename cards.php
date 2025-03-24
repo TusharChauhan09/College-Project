@@ -25,10 +25,11 @@
     </script>
 </head>
 
-<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen p-4">
-    <div class="max-w-md w-full">
+<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen p-4 ">
+    <div class="max-w-200 w-200 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3    ">
         <!-- Profile Card -->
-        <div class="bg-gray-800 rounded-lg shadow-card overflow-hidden">
+         <!-- 1. -->
+        <div class="bg-gray-800 rounded-lg shadow-card overflow-hidden m-10">
             <!-- Header -->
             <div class="bg-linkedin-dark text-white h-auto p-2  flex flex-col items-center justify-center px-4 rounded-lg shadow-md">
                 <p id="quote" class="text-sm font-medium italic text-center"><i class="fa-solid fa-circle-notch animate-spin "></i></p>
@@ -73,11 +74,11 @@
                 <!-- Actions -->
                 <div class="mt-6 flex justify-around ">
                     <button
-                        class="bg-linkedin-blue text-white px-4 py-2 rounded font-medium hover:bg-blue-700 transition-colors flex items-center">
+                        class="bg-linkedin-blue text-white px-4 py-2 mr-1 rounded font-medium hover:bg-blue-700 transition-colors flex items-center">
                         <i class="fa-solid fa-check fa-fade mr-1"></i> Accept 
                     </button>
                     <button
-                        class="bg-linkedin-blue text-white px-4 py-2 rounded font-medium hover:bg-blue-700 transition-colors flex items-center">
+                        class="bg-linkedin-blue text-white px-4 py-2 mr-1 rounded font-medium hover:bg-red-700 transition-colors flex items-center">
                         <i class="fa-solid fa-xmark fa-fade mr-1"></i> Reject
                     </button>
                     
@@ -89,6 +90,10 @@
                 </div>
             </div>
         </div>
+
+        <!-- 2. -->
+        
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -104,14 +109,10 @@
         fetch('https://dummyjson.com/quotes/random')
           .then(res => res.json())
           .then(data => {
-              document.getElementById('quote').innerText = `"${data.quote}"`;
-              document.getElementById('author').innerText = `--by ${data.author}`;
+              document.querySelector('#quote').innerText = `"${data.quote}"`;
+              document.querySelector('#author').innerText = `--by ${data.author}`;
           })
           .catch(error => console.error('Error fetching quote:', error));
-
-
-
-
 
     </script>
 </body>
