@@ -1,0 +1,61 @@
+# Dependencies
+/vendor/
+/node_modules/
+composer.lock
+package-lock.json
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE and Editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.phpintel/
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Project specific uploads and media
+/Profile/
+/Resume/
+/img/
+/uploads/
+/images/
+
+# Database configuration
+dbconnect.php
+database.php
+*config.php
+
+# Logs and cache
+*.log
+/logs/
+/cache/
+*.cache
+
+# Build and compiled files
+/dist/
+/build/
+/public/build/
+/public/hot
+
+# Temporary files
+*.tmp
+/temp/
+/tmp/
+
+# Test coverage
+/coverage/
+/tests/coverage/
+
+# Local development
+*.local
+*.dev
+*.test
