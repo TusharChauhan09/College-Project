@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <!-- form -->
                     <div id="a" class=" flex flex-col justify-center items-center text-2xl ">
-                        <form action="/Project/signup.php" method="post">
+                        <form action="/new/signup.php" method="post">
                             <div class=" flex gap-[13px] mb-[10px]">
                                 <label class for="name"><i class="fa-solid fa-signature"></i></label>
                                 <input type="text" id="name" name="name"

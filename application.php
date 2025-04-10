@@ -1,90 +1,135 @@
 <?php
+require './auth.php';
+?>
 
-    echo '
-    
-    <div class="max-w-2xl w-290  mx-auto p-6 bg-gray-900 text-white rounded-3xl shadow-lg">
-    <form action="/Project/profile.php" method="POST" enctype="multipart/form-data" class="space-y-6">
-        <!-- Post Section -->
-        <!-- profile  -->
-        <label for="profile"   class="block text-sm font-medium mb-2">Upload Profile Pic</label>
-        <div class="relative mb-[100px]">
-            <input 
-                type="file" 
-                id="profile" 
-                name="profile" 
-                required
-                class="opacity-0 absolute w-full h-full cursor-pointer"
-            >
-            <button 
-                type="button"
-                class="px-6 py-2 bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-            >
-                Upload Profile Pic
-            </button>
+<div
+    class="application-form bg-gradient-to-br from-gray-900/80 to-gray-800/80 p-6 rounded-3xl border border-gray-700/30 backdrop-blur-xl shadow-2xl max-w-md mx-auto mt-12">
+    <form action="profile.php" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <!-- Profile Image Upload -->
+        <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-300">Profile Image</label>
+            <div class="mt-1 flex items-center justify-center w-full">
+                <label
+                    class="w-full flex flex-col items-center px-4 py-6 bg-gray-800/50 text-gray-300 rounded-xl border-2 border-gray-700/30 border-dashed cursor-pointer hover:bg-gray-800/70 transition-all duration-300">
+                    <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    <span class="text-sm">Upload Profile Image</span>
+                    <input type="file" name="profile" class="hidden" accept="image/*" required>
+                </label>
+            </div>
         </div>
-        <p class="mt-1 text-xs text-gray-400">JPG, PNG, JPEG</p>
 
-        <div>
-            <label for="post" class="block text-sm font-medium mb-2">Position Applying For</label>
-            <input 
-                type="text" 
-                id="post" 
-                name="post" 
-                required
-                class=" text-gray-400 w-full px-4 py-2 bg-white/10 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500  placeholder-gray-600"
-                placeholder="Enter your role"
-            >
+        <!-- Resume Upload -->
+        <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-300">Resume</label>
+            <div class="mt-1 flex items-center justify-center w-full">
+                <label
+                    class="w-full flex flex-col items-center px-4 py-6 bg-gray-800/50 text-gray-300 rounded-xl border-2 border-gray-700/30 border-dashed cursor-pointer hover:bg-gray-800/70 transition-all duration-300">
+                    <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                    <span class="text-sm">Upload Resume (PDF)</span>
+                    <input type="file" name="resume" class="hidden" accept="image/*" required>
+                </label>
+            </div>
+        </div>
+
+        <!-- Post Selection -->
+        <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-300">Position</label>
+            <select name="post" required
+                class="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700/30 rounded-xl text-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                <option value="">Select Position</option>
+                <option value="Frontend Developer">Frontend Developer</option>
+                <option value="Backend Developer">Backend Developer</option>
+                <option value="Full Stack Developer">Full Stack Developer</option>
+                <option value="UI/UX Designer">UI/UX Designer</option>
+                <option value="Product Manager">Product Manager</option>
+            </select>
         </div>
 
         <!-- About Section -->
-        <div>
-            <label for="about" class="block text-sm font-medium mb-2">About Yourself</label>
-            <textarea 
-                id="about" 
-                name="about" 
-                rows="6"
-                required
-                class=" text-gray-400 w-full px-4 py-2 bg-white/10 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500  placeholder-gray-600"
-                placeholder="Tell us about yourself..."
-            ></textarea>
-        </div>
-
-        <!-- Upload Resume Section -->
-        <div>
-            <label for="resume" class="block text-sm font-medium mb-2">Upload Resume</label>
-            <div class="relative">
-                <input 
-                    type="file" 
-                    id="resume" 
-                    name="resume" 
-                    required
-                    class="opacity-0 absolute w-full h-full cursor-pointer"
-                >
-                <button 
-                    type="button"
-                    class="w-full px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center justify-center gap-2"
-                >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                    </svg>
-                    Upload Resume
-                </button>
-            </div>
-            <p class="mt-1 text-xs text-gray-400">JPG, PNG, JPEG</p>
+        <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-300">About You</label>
+            <textarea name="about" rows="4" required
+                class="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700/30 rounded-xl text-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none"
+                placeholder="Tell us about yourself..."></textarea>
         </div>
 
         <!-- Submit Button -->
-        <div class="text-center">
-            <button 
-                type="submit" name="submit"
-                class="px-6 py-2 bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-            >
-                Submit
+        <div class="flex justify-end space-x-4">
+            <button type="submit" name="submit"
+                class="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium rounded-xl shadow-lg transition-all duration-300 hover:from-purple-500 hover:to-pink-500 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                Submit Application
             </button>
         </div>
     </form>
 </div>
-    
-    
-    ';
-?>
+
+<style>
+    /* Light mode support */
+    html.light-mode .application-form {
+        background: linear-gradient(to bottom right, rgba(219, 214, 178, 0.8), rgba(197, 193, 160, 0.8));
+        border-color: rgba(197, 193, 160, 0.5);
+    }
+
+    html.light-mode .application-form label {
+        color: var(--text-primary-light);
+    }
+
+    html.light-mode .application-form select,
+    html.light-mode .application-form textarea {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(197, 193, 160, 0.5);
+        color: var(--text-primary-light);
+    }
+
+    html.light-mode .application-form select option {
+        background-color: var(--bg-color-light);
+        color: var(--text-primary-light);
+    }
+
+    html.light-mode .application-form label[for="profile"],
+    html.light-mode .application-form label[for="resume"] {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(197, 193, 160, 0.5);
+        color: var(--text-primary-light);
+    }
+
+    /* File input styling */
+    input[type="file"]::file-selector-button {
+        display: none;
+    }
+
+    /* Animations */
+    .application-form {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Focus states */
+    .application-form select:focus,
+    .application-form textarea:focus {
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+
+    /* Hover states */
+    .application-form label:hover {
+        transform: translateY(-1px);
+    }
+</style>

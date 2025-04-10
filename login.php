@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <!-- form -->
                     <div id="a" class=" flex flex-col justify-center items-center text-2xl ">
-                        <form action="/Project/login.php" method="post">
+                        <form action="/new/login.php" method="post">
                             <div class=" flex gap-[20px] mb-[10px]">
                                 <label for="email"><i class="fa-solid fa-envelope"></i></label>
                                 <input type="text" id="email" name="email"
@@ -137,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <!-- signup -->
                     <div id="a" class=" flex justify-center  ">
-                        <pre>Don't have an account...! </pre><a href="/Project/signup.php">
+                        <pre>Don't have an account...! </pre><a href="/new/signup.php">
                             <pre class=" text-indigo-800 ">SignUp</pre>
                         </a>
                     </div>

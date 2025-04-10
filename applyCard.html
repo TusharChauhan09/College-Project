@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Search & Application Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+      .job-card {
+        transition: all 0.3s ease;
+      }
+      .job-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      .chat-container {
+        height: 400px;
+        overflow-y: auto;
+      }
+      .message {
+        max-width: 80%;
+        margin-bottom: 20px;
+        padding: 15px 20px;
+        border-radius: 15px;
+        line-height: 1.6;
+      }
+      .user-message {
+        background-color: #e3f2fd;
+        margin-left: auto;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+      .bot-message {
+        background-color: #f5f5f5;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+      .typing-indicator {
+        display: none;
+        padding: 10px 15px;
+        background-color: #f5f5f5;
+        border-radius: 15px;
+        margin-bottom: 10px;
+      }
+      .typing-indicator span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: #90a4ae;
+        border-radius: 50%;
+        margin-right: 5px;
+        animation: typing 1s infinite;
+      }
+      @keyframes typing {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+      .typing-indicator span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-indicator span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      .quick-options {
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+      .quick-option {
+        margin-bottom: 8px;
+      }
+      .file-upload-container {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        padding: 15px;
+        border: 2px dashed #cbd5e0;
+        border-radius: 8px;
+        text-align: center;
+        background-color: #f8fafc;
+      }
+      .file-upload-container:hover {
+        border-color: #3b82f6;
+        background-color: #f0f7ff;
+      }
+      .file-upload-input {
+        display: none;
+      }
+      .file-upload-label {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #3b82f6;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .file-upload-label:hover {
+        background-color: #2563eb;
+      }
+      .rating-container {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .rating-stars {
+        display: flex;
+        margin-right: 10px;
+      }
+      .rating-star {
+        color: #fbbf24;
+        font-size: 20px;
+        margin-right: 2px;
+      }
+      .rating-score {
+        font-weight: bold;
+        font-size: 18px;
+      }
+      .cv-feedback {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #f0f9ff;
+        border-radius: 6px;
+        border-left: 4px solid #3b82f6;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <a href="#" class="text-2xl font-bold text-blue-600">JobSearch</a>
+          </div>
+          <div class="flex items-center space-x-4">
+            <button
+              id="openBotBtn"
+              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+            >
+              <i class="fas fa-robot mr-2"></i>Job Assistant
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Search Section -->
+      <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">
+          Find Your Dream Job
+        </h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-gray-700 mb-2"
+              >Job Title or Keywords</label
+            >
+            <input
+              type="text"
+              id="jobTitle"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g., Software Developer"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Location</label>
+            <input
+              type="text"
+              id="location"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g., New York"
+            />
+          </div>
+          <div class="flex items-end">
+            <button
+              id="searchBtn"
+              class="w-full bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+            >
+              <i class="fas fa-search mr-2"></i>Search Jobs
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job Cards Container -->
+      <div
+        id="jobCards"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- Job cards will be dynamically inserted here -->
+      </div>
+
+      <!-- Loading Indicator -->
+      <div id="loadingIndicator" class="hidden text-center py-8">
+        <div
+          class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
+        ></div>
+        <p class="mt-2 text-gray-600">Loading jobs...</p>
+      </div>
+    </div>
+
+    <!-- Job Application Bot Modal -->
+    <div
+      id="botModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center"
+    >
+      <div class="bg-white rounded-lg w-full max-w-2xl mx-4">
+        <div class="p-4 border-b flex justify-between items-center">
+          <h2 class="text-xl font-bold text-gray-800">
+            Job Application Assistant
+          </h2>
+          <button id="closeBotBtn" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="p-4">
+          <div class="chat-container mb-4" id="chatContainer">
+            <div class="bot-message message">
+              Hello! I'm your job application assistant. I can help you with:
+              <ul class="list-disc ml-5 mt-2">
+                <li>Resume review and suggestions</li>
+                <li>Interview preparation</li>
+                <li>Job application guidance</li>
+                <li>Career advice</li>
+              </ul>
+              How can I assist you today?
+            </div>
+            <div class="quick-options mt-4 flex flex-wrap gap-2">
+              <button
+                class="quick-option bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition"
+                data-option="resume"
+              >
+                Resume Review
+              </button>
+              <button
+                class="quick-option bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition"
+                data-option="interview"
+              >
+                Interview Prep
+              </button>
+              <button
+                class="quick-option bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition"
+                data-option="application"
+              >
+                Job Application
+              </button>
+              <button
+                class="quick-option bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition"
+                data-option="career"
+              >
+                Career Advice
+              </button>
+            </div>
+            <div
+              class="file-upload-container"
+              id="cvUploadContainer"
+              style="display: none"
+            >
+              <p class="text-gray-700 mb-2">
+                Upload your CV for an AI-powered evaluation
+              </p>
+              <label for="cvFile" class="file-upload-label">
+                <i class="fas fa-upload mr-2"></i>Upload CV
+              </label>
+              <input
+                type="file"
+                id="cvFile"
+                class="file-upload-input"
+                accept=".pdf,.doc,.docx"
+              />
+              <p class="text-sm text-gray-500 mt-2">
+                Supported formats: PDF, DOC, DOCX
+              </p>
+            </div>
+          </div>
+          <div class="typing-indicator" id="typingIndicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="flex">
+            <input
+              type="text"
+              id="userInput"
+              class="flex-1 px-4 py-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Type your message..."
+            />
+            <button
+              id="sendMessageBtn"
+              class="bg-blue-600 text-white px-6 py-2 rounded-r-lg hover:bg-blue-700 transition"
+            >
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Load environment variables
+      const API_KEY = "AIzaSyBB9wkYzmicuxnliFE7fZe_nzSYzSeQHwQ";
+
+      // DOM Elements
+      const searchBtn = document.getElementById("searchBtn");
+      const jobCards = document.getElementById("jobCards");
+      const loadingIndicator = document.getElementById("loadingIndicator");
+      const botModal = document.getElementById("botModal");
+      const openBotBtn = document.getElementById("openBotBtn");
+      const closeBotBtn = document.getElementById("closeBotBtn");
+      const chatContainer = document.getElementById("chatContainer");
+      const userInput = document.getElementById("userInput");
+      const sendMessageBtn = document.getElementById("sendMessageBtn");
+      const typingIndicator = document.getElementById("typingIndicator");
+      const cvUploadContainer = document.getElementById("cvUploadContainer");
+      const cvFileInput = document.getElementById("cvFile");
+
+      // Job Search Function
+      async function searchJobs() {
+        const jobTitle = document.getElementById("jobTitle").value;
+        const location = document.getElementById("location").value;
+
+        if (!jobTitle && !location) {
+          alert("Please enter at least a job title or location");
+          return;
+        }
+
+        loadingIndicator.classList.remove("hidden");
+        jobCards.innerHTML = "";
+
+        try {
+          const response = await axios.get(
+            `https://www.googleapis.com/jobs/v1/search`,
+            {
+              params: {
+                key: API_KEY,
+                q: jobTitle,
+                location: location,
+                maxResults: 20,
+              },
+            }
+          );
+
+          displayJobs(response.data.jobs);
+        } catch (error) {
+          console.error("Error fetching jobs:", error);
+          jobCards.innerHTML = `
+                    <div class="col-span-full text-center py-8">
+                        <p class="text-red-600">Error loading jobs. Please try again later.</p>
+                    </div>
+                `;
+        } finally {
+          loadingIndicator.classList.add("hidden");
+        }
+      }
+
+      // Display Jobs Function
+      function displayJobs(jobs) {
+        jobCards.innerHTML = "";
+
+        jobs.forEach((job) => {
+          const card = document.createElement("div");
+          card.className = "job-card bg-white rounded-lg shadow-md p-6";
+          card.innerHTML = `
+                    <div class="flex items-start mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">${
+                              job.title
+                            }</h3>
+                            <p class="text-gray-600 font-medium">${
+                              job.company
+                            }</p>
+                            <p class="text-gray-500 text-sm">
+                                <i class="fas fa-map-marker-alt mr-1"></i>${
+                                  job.location
+                                }
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="text-gray-700">${job.description.substring(
+                          0,
+                          150
+                        )}...</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition" onclick="applyForJob('${
+                          job.id
+                        }')">
+                            Apply Now
+                        </button>
+                        <button class="text-gray-500 hover:text-gray-700" onclick="saveJob('${
+                          job.id
+                        }')">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                    </div>
+                `;
+          jobCards.appendChild(card);
+        });
+      }
+
+      // Job Application Bot Functions
+      function showTypingIndicator() {
+        typingIndicator.style.display = "block";
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+
+      function hideTypingIndicator() {
+        typingIndicator.style.display = "none";
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+
+      function addMessage(message, isUser = false) {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${
+          isUser ? "user-message" : "bot-message"
+        }`;
+
+        // Format the message with proper line breaks and styling
+        if (!isUser) {
+          // For bot messages, format with proper styling
+          const formattedMessage = message
+            .split("\n\n")
+            .map((paragraph) => {
+              if (
+                paragraph.startsWith("1.") ||
+                paragraph.startsWith("2.") ||
+                paragraph.startsWith("3.") ||
+                paragraph.startsWith("4.") ||
+                paragraph.startsWith("5.") ||
+                paragraph.startsWith("6.")
+              ) {
+                // This is a list, format it properly
+                return `<div class="mb-2">${paragraph}</div>`;
+              } else if (paragraph.startsWith("-")) {
+                // This is a bullet list
+                return `<div class="mb-2">${paragraph}</div>`;
+              } else {
+                return `<p class="mb-2">${paragraph}</p>`;
+              }
+            })
+            .join("");
+
+          messageDiv.innerHTML = formattedMessage;
+        } else {
+          // For user messages, just use text content
+          messageDiv.textContent = message;
+        }
+
+        chatContainer.appendChild(messageDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+
+      function addQuickOptions(options) {
+        const optionsDiv = document.createElement("div");
+        optionsDiv.className = "quick-options mt-4 flex flex-wrap gap-2";
+
+        options.forEach((option) => {
+          const button = document.createElement("button");
+          button.className =
+            "quick-option bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition";
+          button.textContent = option.text;
+          button.dataset.option = option.value;
+          button.addEventListener("click", () => {
+            handleUserMessage(option.text);
+          });
+          optionsDiv.appendChild(button);
+        });
+
+        chatContainer.appendChild(optionsDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+
+      async function handleUserMessage(message) {
+        addMessage(message, true);
+        showTypingIndicator();
+
+        // Simulate bot response (replace with actual API call)
+        setTimeout(() => {
+          hideTypingIndicator();
+          const response = generateBotResponse(message);
+          addMessage(response);
+
+          // Show CV upload container if the message is about resume review
+          if (
+            message.toLowerCase().includes("resume") ||
+            message.toLowerCase().includes("cv")
+          ) {
+            cvUploadContainer.style.display = "block";
+          } else {
+            cvUploadContainer.style.display = "none";
+          }
+
+          // Add quick options based on the response
+          if (
+            message.toLowerCase().includes("resume") ||
+            message.toLowerCase().includes("cv")
+          ) {
+            addQuickOptions([
+              { text: "Resume Format", value: "resume_format" },
+              { text: "Resume Content", value: "resume_content" },
+              { text: "Resume Keywords", value: "resume_keywords" },
+              { text: "Resume Examples", value: "resume_examples" },
+            ]);
+          } else if (message.toLowerCase().includes("interview")) {
+            addQuickOptions([
+              { text: "Common Questions", value: "common_questions" },
+              { text: "Technical Questions", value: "technical_questions" },
+              { text: "Behavioral Questions", value: "behavioral_questions" },
+              { text: "Salary Negotiation", value: "salary_negotiation" },
+            ]);
+          } else if (
+            message.toLowerCase().includes("apply") ||
+            message.toLowerCase().includes("application")
+          ) {
+            addQuickOptions([
+              { text: "Cover Letter", value: "cover_letter" },
+              { text: "Application Process", value: "application_process" },
+              { text: "Follow-up", value: "follow_up" },
+              { text: "Portfolio", value: "portfolio" },
+            ]);
+          } else if (message.toLowerCase().includes("career")) {
+            addQuickOptions([
+              { text: "Career Path", value: "career_path" },
+              { text: "Skill Development", value: "skill_development" },
+              { text: "Networking", value: "networking" },
+              { text: "Industry Trends", value: "industry_trends" },
+            ]);
+          } else {
+            addQuickOptions([
+              { text: "Resume Review", value: "resume" },
+              { text: "Interview Prep", value: "interview" },
+              { text: "Job Application", value: "application" },
+              { text: "Career Advice", value: "career" },
+            ]);
+          }
+        }, 1000);
+      }
+
+      function generateBotResponse(message) {
+        const lowerMessage = message.toLowerCase();
+
+        if (lowerMessage.includes("resume") || lowerMessage.includes("cv")) {
+          return "I can help you review your resume. What specific aspect would you like to focus on?\n\nA well-crafted resume is your first impression on potential employers and can significantly increase your chances of getting interviews. Whether you're just starting your career or looking to advance, having a strong resume is essential.\n\nI can provide guidance on various aspects of resume creation and optimization, from formatting and structure to content and keyword optimization. What would you like to learn more about?";
+        } else if (lowerMessage.includes("interview")) {
+          return "For interview preparation, I can help with various aspects. What would you like to know more about?\n\nInterviews can be challenging, but with proper preparation, you can approach them with confidence. Whether you're facing a behavioral interview, technical assessment, or a panel interview, understanding what to expect and how to present yourself effectively is crucial.\n\nI can provide guidance on common interview questions, technical interview preparation, behavioral question strategies, and salary negotiation techniques. Which area would you like to explore first?";
+        } else if (
+          lowerMessage.includes("apply") ||
+          lowerMessage.includes("application")
+        ) {
+          return "I can guide you through the job application process. What specific help do you need?\n\nThe job application process can be complex and varies depending on the industry and company. From crafting a compelling cover letter to navigating the application process and following up after interviews, each step requires careful attention.\n\nI can provide detailed guidance on creating effective application materials, understanding the application process, following up appropriately, and building a professional portfolio. What aspect would you like to focus on?";
+        } else if (lowerMessage.includes("career")) {
+          return "I can provide career advice to help you advance in your professional journey. What would you like to know?\n\nCareer development is a continuous process that involves assessing your current position, setting goals, and taking strategic steps to achieve them. Whether you're just starting out or looking to make a career transition, having a clear plan and the right resources can make a significant difference.\n\nI can offer guidance on career planning, skill development, networking strategies, and staying informed about industry trends. Which area would you like to explore?";
+        } else if (lowerMessage.includes("resume format")) {
+          return "For a professional resume format, consider these tips:\n\n1. Use a clean, consistent layout that makes your information easy to scan\n2. Include clear section headings that stand out visually\n3. Use bullet points for achievements to highlight your accomplishments\n4. Keep it to 1-2 pages maximum, focusing on the most relevant information\n5. Use a professional font like Arial, Calibri, or Times New Roman\n6. Ensure adequate white space to improve readability\n7. Use consistent formatting throughout the document\n8. Align all text properly and use consistent spacing\n\nA well-formatted resume creates a positive first impression and makes it easier for hiring managers to find the information they need. The format should complement your content without overshadowing it.\n\nWould you like more specific advice on any of these aspects? I can provide examples of effective resume layouts or guidance on formatting specific sections of your resume.";
+        } else if (lowerMessage.includes("resume content")) {
+          return "Your resume content should include these essential elements:\n\n1. Contact information: Your name, phone number, email, and professional social media profiles\n2. Professional summary: A concise overview of your qualifications and career objectives\n3. Work experience: Detailed descriptions of your roles, responsibilities, and achievements\n4. Education: Your academic background, including degrees, certifications, and relevant coursework\n5. Skills: Both technical and soft skills relevant to the job you're applying for\n6. Certifications: Any professional certifications that enhance your qualifications\n7. Projects: Highlight significant projects that demonstrate your expertise\n8. Achievements: Quantifiable results that showcase your impact in previous roles\n\nEach section should be tailored to the specific job you're applying for. Focus on achievements rather than just listing responsibilities, and use action verbs to begin each bullet point.\n\nWhich section would you like help with? I can provide specific guidance on crafting compelling content for any part of your resume.";
+        } else if (lowerMessage.includes("resume keywords")) {
+          return "To optimize your resume with keywords, follow these strategies:\n\n1. Study the job description thoroughly to identify key terms and phrases\n2. Include industry-specific terminology that demonstrates your expertise\n3. Use action verbs that describe your accomplishments (e.g., 'developed', 'managed', 'implemented')\n4. Highlight technical skills and tools that are relevant to the position\n5. Include quantifiable achievements that demonstrate your impact\n6. Incorporate soft skills that are mentioned in the job posting\n7. Use variations of important keywords to ensure comprehensive coverage\n8. Place keywords strategically throughout your resume, especially in the summary and experience sections\n\nKeyword optimization is crucial because many companies use Applicant Tracking Systems (ATS) to screen resumes. These systems scan for specific keywords to determine if your resume matches the job requirements.\n\nWould you like examples of keywords for a specific industry? I can provide targeted keyword suggestions based on your field of interest.";
+        } else if (lowerMessage.includes("common questions")) {
+          return "Common interview questions include these classics that you should prepare for:\n\n1. Tell me about yourself - This is your opportunity to give a concise professional summary\n2. What are your strengths and weaknesses? - Focus on strengths relevant to the job and frame weaknesses as areas for improvement\n3. Why do you want this job? - Demonstrate your knowledge of the company and how your skills align with their needs\n4. Where do you see yourself in 5 years? - Show ambition while remaining realistic about career progression\n5. Why should we hire you? - Highlight your unique qualifications and how they benefit the company\n6. What is your expected salary? - Research industry standards and be prepared to discuss your value\n7. Do you have any questions for us? - Always have thoughtful questions prepared to show your interest\n8. What is your greatest achievement? - Choose a relevant example that demonstrates skills valuable to the role\n\nFor each question, prepare a concise but comprehensive answer that highlights your relevant experience and skills. Practice your responses out loud to improve delivery and confidence.\n\nWould you like help preparing answers to any of these questions? I can provide guidance on structuring effective responses for specific questions.";
+        } else if (lowerMessage.includes("technical questions")) {
+          return "For technical interviews, prepare for these common areas of assessment:\n\n1. Coding problems - Practice solving algorithmic challenges and explaining your thought process\n2. System design questions - Be ready to discuss architecture, scalability, and trade-offs\n3. Algorithm and data structure questions - Review fundamental concepts and their applications\n4. Technical knowledge assessment - Study core concepts relevant to the position\n5. Problem-solving scenarios - Practice breaking down complex problems into manageable parts\n6. Code review exercises - Be prepared to review and improve sample code\n7. Technical system troubleshooting - Practice diagnosing and solving technical issues\n8. Performance optimization - Understand how to identify and address performance bottlenecks\n\nTechnical interviews often focus on both your knowledge and your problem-solving approach. It's important to communicate your thought process clearly, even if you don't arrive at the optimal solution.\n\nWhich area would you like to focus on? I can provide specific resources and practice questions for different technical domains.";
+        } else if (lowerMessage.includes("behavioral questions")) {
+          return "Behavioral questions often start with phrases like these:\n\n1. Tell me about a time when... - You faced a challenge, demonstrated leadership, or solved a problem\n2. Describe a situation where... - You had to work under pressure, dealt with conflict, or showed initiative\n3. How did you handle... - A difficult colleague, a project failure, or a tight deadline\n4. What was the most challenging... - Project, decision, or feedback you've received\n5. Give an example of... - When you showed creativity, adaptability, or teamwork\n6. Walk me through... - A project you managed, a decision you made, or a problem you solved\n7. Tell me about a time you... - Failed, succeeded, or learned something new\n8. Describe how you... - Motivated others, managed change, or resolved a conflict\n\nUse the STAR method (Situation, Task, Action, Result) to structure your answers:\n- Situation: Describe the context and background\n- Task: Explain what needed to be done\n- Action: Detail the specific steps you took\n- Result: Share the outcome and what you learned\n\nThis framework helps you provide comprehensive, focused answers that highlight your skills and experiences effectively.";
+        } else if (lowerMessage.includes("salary negotiation")) {
+          return "For salary negotiation, follow these comprehensive strategies:\n\n1. Research industry standards thoroughly using reliable salary data sources\n2. Know your worth by assessing your skills, experience, and market value\n3. Consider the entire compensation package, not just the base salary\n4. Practice your pitch to articulate your value proposition confidently\n5. Be prepared to walk away if the offer doesn't meet your minimum requirements\n6. Understand the company's constraints and budget limitations\n7. Timing is crucial - negotiate after receiving an offer, not during initial interviews\n8. Focus on value rather than need when discussing compensation\n9. Be prepared to provide specific examples of your contributions and achievements\n10. Consider non-monetary benefits that might be negotiable (flexible hours, remote work, etc.)\n\nSalary negotiation is a skill that improves with practice. The goal is to reach an agreement that values your contributions while respecting the company's constraints.\n\nWould you like specific strategies for negotiating in your industry? I can provide targeted advice based on your field and experience level.";
+        } else if (lowerMessage.includes("cover letter")) {
+          return "A strong cover letter should incorporate these essential elements:\n\n1. Be personalized to the job and company, showing you've done your research\n2. Highlight relevant experience and skills that match the job requirements\n3. Show enthusiasm for the company and the specific role\n4. Include a clear call to action that encourages the hiring manager to contact you\n5. Be concise (3-4 paragraphs) while covering all necessary information\n6. Use a professional tone that matches the company culture\n7. Address the hiring manager directly when possible\n8. Explain any gaps in employment or career changes\n9. Demonstrate your understanding of the company's challenges and how you can help\n10. End with a strong closing that reiterates your interest and availability\n\nA well-crafted cover letter complements your resume by providing context for your experience and demonstrating your communication skills. It's your opportunity to tell your professional story and connect your qualifications to the specific role.\n\nWould you like a template or more specific advice on crafting your cover letter? I can provide guidance on structure, content, and language for different industries and career levels.";
+        } else if (lowerMessage.includes("application process")) {
+          return "The typical job application process includes these stages:\n\n1. Submitting resume and cover letter - Your initial application materials\n2. Initial screening call - A brief conversation to assess basic qualifications\n3. Technical assessment - Skills tests, coding challenges, or portfolio review\n4. Interviews - Phone, video, or in-person meetings with various stakeholders\n5. Reference checks - Verification of your experience and qualifications\n6. Offer negotiation - Discussion of compensation and benefits\n7. Background check - Verification of your credentials and history\n8. Onboarding - Integration into the company and role\n\nUnderstanding this process helps you prepare appropriately at each stage. Different companies may have variations of this process, but these are the common elements you should be prepared for.\n\nWhich stage are you currently at? I can provide specific guidance on how to excel at any point in the application process.";
+        } else if (lowerMessage.includes("follow-up")) {
+          return "After an interview, follow these best practices:\n\n1. Send a thank-you email within 24 hours to express appreciation and reiterate interest\n2. Mention specific points discussed during the interview to demonstrate attentiveness\n3. Reiterate your interest in the position and your qualifications\n4. Ask about next steps in the hiring process to set expectations\n5. Follow up if you don't hear back within a week, showing continued interest\n6. Keep your follow-up professional and concise\n7. Address any questions or concerns that arose during the interview\n8. Include any additional information that might strengthen your candidacy\n9. Maintain a positive tone even if you're feeling anxious about the outcome\n10. Follow up with each person you interviewed with individually\n\nEffective follow-up demonstrates your professionalism, enthusiasm, and attention to detail. It keeps you top-of-mind with the hiring team and can positively influence their decision.\n\nWould you like a template for a thank-you email? I can provide examples for different interview scenarios and industries.";
+        } else if (lowerMessage.includes("portfolio")) {
+          return "A professional portfolio should include these essential elements:\n\n1. Your best work samples that demonstrate your skills and expertise\n2. Project descriptions that explain your role, approach, and outcomes\n3. Your role and contributions to each project, highlighting your specific responsibilities\n4. Results and metrics that quantify your impact and achievements\n5. Skills demonstrated through your work examples\n6. A professional bio that introduces you and your expertise\n7. Contact information for potential employers or clients\n8. Testimonials from colleagues, clients, or supervisors (if available)\n9. A clean, organized layout that makes navigation intuitive\n10. Regular updates to keep your portfolio current and relevant\n\nA well-curated portfolio provides tangible evidence of your abilities and can significantly strengthen your job application. It allows potential employers to see your work in action rather than just reading about it.\n\nWould you like advice on creating a digital portfolio? I can provide guidance on platforms, structure, and content organization for different industries and career levels.";
+        } else if (lowerMessage.includes("career path")) {
+          return "To plan your career path effectively, follow these comprehensive steps:\n\n1. Assess your current skills and interests through self-reflection and feedback\n2. Research potential roles and industries that align with your strengths and passions\n3. Set short and long-term goals that provide direction and motivation\n4. Identify skill gaps and development needs through job market research\n5. Network with professionals in your target field to gain insights and opportunities\n6. Create a timeline for achieving your career milestones\n7. Develop a personal brand that communicates your unique value proposition\n8. Build a diverse skill set that makes you adaptable to changing market demands\n9. Seek mentorship from experienced professionals who can guide your development\n10. Regularly review and adjust your career plan as circumstances change\n\nA well-planned career path provides direction and purpose to your professional development. It helps you make informed decisions about education, training, and job opportunities that align with your long-term goals.\n\nWhich aspect would you like to explore further? I can provide specific guidance on career planning strategies for different industries and career stages.";
+        } else if (lowerMessage.includes("skill development")) {
+          return "To develop your skills effectively, consider these comprehensive approaches:\n\n1. Take online courses from reputable platforms like Coursera, Udemy, or LinkedIn Learning\n2. Work on personal projects that allow you to apply and expand your skills\n3. Attend workshops and conferences to learn from experts and network with peers\n4. Find a mentor who can provide guidance, feedback, and career advice\n5. Join professional communities and forums to connect with like-minded individuals\n6. Read industry publications and books to stay informed about trends and best practices\n7. Participate in hackathons or collaborative projects to gain hands-on experience\n8. Seek feedback from colleagues and supervisors to identify areas for improvement\n9. Create a structured learning plan with specific goals and timelines\n10. Apply your new skills in your current role or through volunteer opportunities\n\nSkill development is an ongoing process that requires dedication and strategic planning. By continuously improving your abilities, you increase your value to employers and open up new career opportunities.\n\nWhich skills are you looking to develop? I can provide specific resources and strategies for different technical and soft skills across various industries.";
+        } else if (lowerMessage.includes("networking")) {
+          return "Effective networking strategies include these comprehensive approaches:\n\n1. Attend industry events, conferences, and meetups to connect with professionals\n2. Join professional associations and organizations relevant to your field\n3. Connect on LinkedIn and other professional platforms with a personalized approach\n4. Conduct informational interviews to learn from experienced professionals\n5. Follow up regularly with your network to maintain relationships\n6. Offer value to your connections by sharing resources and opportunities\n7. Participate in online communities and forums related to your industry\n8. Attend alumni events and leverage your educational network\n9. Create and share content that demonstrates your expertise\n10. Volunteer for industry organizations to expand your network while contributing\n\nNetworking is about building genuine relationships based on mutual benefit. It's not just about collecting contacts but about creating a supportive professional community that can help you grow and succeed.\n\nWould you like specific tips for any of these approaches? I can provide guidance on effective networking strategies for different industries and career stages.";
+        } else if (lowerMessage.includes("industry trends")) {
+          return "Current industry trends to be aware of across various sectors include:\n\n1. Remote and hybrid work models becoming standard in many industries\n2. AI and automation transforming workflows and creating new roles\n3. Sustainability and ESG (Environmental, Social, Governance) priorities\n4. Digital transformation accelerating across all sectors\n5. Upskilling and reskilling becoming essential for career longevity\n6. Data-driven decision making increasing in importance\n7. Cybersecurity concerns growing with digital reliance\n8. Mental health and well-being becoming workplace priorities\n9. Diversity, equity, and inclusion initiatives expanding\n10. Gig economy and freelance work continuing to grow\n\nStaying informed about industry trends helps you position yourself strategically in the job market. It allows you to anticipate changes, develop relevant skills, and align your career with emerging opportunities.\n\nWhich industry are you interested in? I can provide more specific trend information for different sectors and how they might impact your career path.";
+        } else {
+          return "I'm here to help with your job search and application process. You can ask me about:\n\n- Resume review and optimization strategies\n- Interview preparation techniques for different types of interviews\n- Job application guidance from crafting materials to following up\n- Career advice for planning your professional development\n\nMy goal is to provide you with comprehensive, actionable advice that helps you succeed in your job search. Whether you're just starting your career or looking to advance, I can offer guidance tailored to your specific situation.\n\nWhat would you like to know more about? I'm here to help you navigate the complexities of the job search process and develop strategies that work for you.";
+        }
+      }
+
+      // Event Listeners
+      searchBtn.addEventListener("click", searchJobs);
+
+      openBotBtn.addEventListener("click", () => {
+        botModal.classList.remove("hidden");
+      });
+
+      closeBotBtn.addEventListener("click", () => {
+        botModal.classList.add("hidden");
+      });
+
+      sendMessageBtn.addEventListener("click", () => {
+        const message = userInput.value.trim();
+        if (message) {
+          handleUserMessage(message);
+          userInput.value = "";
+        }
+      });
+
+      userInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          const message = userInput.value.trim();
+          if (message) {
+            handleUserMessage(message);
+            userInput.value = "";
+          }
+        }
+      });
+
+      // Add event listener for CV file upload
+      cvFileInput.addEventListener("change", handleCVUpload);
+
+      // Add event listeners for quick options
+      document.addEventListener("DOMContentLoaded", function () {
+        const quickOptions = document.querySelectorAll(".quick-option");
+        quickOptions.forEach((option) => {
+          option.addEventListener("click", function () {
+            const optionText = this.textContent;
+            handleUserMessage(optionText);
+          });
+        });
+      });
+
+      // Job Application Functions
+      function applyForJob(jobId) {
+        botModal.classList.remove("hidden");
+        addMessage(
+          `I see you're interested in applying for this position. To help you with your application, I'll need some information:\n\n1. Your relevant skills and experience\n2. Your preferred work schedule\n3. Your salary expectations\n\nPlease provide these details, and I'll guide you through the application process.`
+        );
+      }
+
+      function saveJob(jobId) {
+        // Implement job saving functionality
+        alert("Job saved to your favorites!");
+      }
+
+      // CV Upload and AI Rating Function
+      function handleCVUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // Show loading message
+        addMessage("Analyzing your CV...", false);
+        showTypingIndicator();
+
+        // Simulate AI analysis (in a real implementation, this would call an API)
+        setTimeout(() => {
+          hideTypingIndicator();
+
+          // Generate a random score between 6 and 10 for demonstration
+          const score = Math.floor(Math.random() * 5) + 6;
+
+          // Create rating message with stars
+          const ratingMessage = document.createElement("div");
+          ratingMessage.className = "bot-message message";
+
+          // Create rating stars
+          let starsHTML = '<div class="rating-stars">';
+          for (let i = 0; i < 10; i++) {
+            if (i < score) {
+              starsHTML += '<i class="fas fa-star rating-star"></i>';
+            } else {
+              starsHTML += '<i class="far fa-star rating-star"></i>';
+            }
+          }
+          starsHTML += "</div>";
+
+          // Create rating score
+          const scoreHTML = `<div class="rating-score">${score}/10</div>`;
+
+          // Create rating container
+          const ratingContainer = document.createElement("div");
+          ratingContainer.className = "rating-container";
+          ratingContainer.innerHTML = starsHTML + scoreHTML;
+
+          // Create feedback message
+          const feedbackMessage = generateCVFeedback(score, file.name);
+
+          // Add everything to the rating message
+          ratingMessage.innerHTML = `
+            <p class="mb-2">I've analyzed your CV "${file.name}" and here's my evaluation:</p>
+            ${ratingContainer.outerHTML}
+            <div class="cv-feedback">
+              ${feedbackMessage}
+            </div>
+            <p class="mt-3">Would you like specific suggestions on how to improve your CV?</p>
+          `;
+
+          // Add the rating message to the chat
+          chatContainer.appendChild(ratingMessage);
+          chatContainer.scrollTop = chatContainer.scrollHeight;
+
+          // Add quick options for CV improvement
+          addQuickOptions([
+            { text: "Resume Format", value: "resume_format" },
+            { text: "Resume Content", value: "resume_content" },
+            { text: "Resume Keywords", value: "resume_keywords" },
+          ]);
+        }, 2000);
+      }
+
+      function generateCVFeedback(score, fileName) {
+        let feedback = "";
+
+        if (score >= 9) {
+          feedback = `
+            <p class="font-bold text-green-600">Excellent CV!</p>
+            <p>Your CV is well-structured and effectively highlights your skills and experience. It's likely to make a strong impression on recruiters.</p>
+            <p class="mt-2">Consider these minor enhancements:</p>
+            <ul class="list-disc ml-4 mt-1">
+              <li>Double-check for any typos or grammatical errors</li>
+              <li>Ensure all dates and contact information are current</li>
+              <li>Consider adding a brief professional summary at the top</li>
+            </ul>
+          `;
+        } else if (score >= 7) {
+          feedback = `
+            <p class="font-bold text-blue-600">Good CV with room for improvement</p>
+            <p>Your CV has a solid foundation but could benefit from some enhancements to make it stand out more.</p>
+            <p class="mt-2">Consider these improvements:</p>
+            <ul class="list-disc ml-4 mt-1">
+              <li>Add more quantifiable achievements to demonstrate impact</li>
+              <li>Ensure your skills section aligns with the job descriptions you're targeting</li>
+              <li>Improve formatting for better readability and visual appeal</li>
+              <li>Consider adding a professional summary that highlights your key strengths</li>
+            </ul>
+          `;
+        } else {
+          feedback = `
+            <p class="font-bold text-amber-600">Your CV needs significant improvement</p>
+            <p>While your CV contains valuable information, it could be much more effective with some restructuring and enhancements.</p>
+            <p class="mt-2">Consider these improvements:</p>
+            <ul class="list-disc ml-4 mt-1">
+              <li>Revise the format to make it more professional and easier to scan</li>
+              <li>Replace generic responsibilities with specific achievements and results</li>
+              <li>Ensure all information is relevant to the positions you're targeting</li>
+              <li>Add a compelling professional summary that highlights your unique value</li>
+              <li>Proofread carefully to eliminate any errors</li>
+            </ul>
+          `;
+        }
+
+        return feedback;
+      }
+    </script>
+  </body>
+</html>

@@ -4,7 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <title>Applications</title>
+    <link href="src/output.css" rel="stylesheet">
+    <link href="src/optimized-effects.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -28,11 +36,13 @@
 <body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen p-4 ">
     <div class="max-w-200 w-200 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3    ">
         <!-- Profile Card -->
-         <!-- 1. -->
+        <!-- 1. -->
         <div class="bg-gray-800 rounded-lg shadow-card overflow-hidden m-10">
             <!-- Header -->
-            <div class="bg-linkedin-dark text-white h-auto p-2  flex flex-col items-center justify-center px-4 rounded-lg shadow-md">
-                <p id="quote" class="text-sm font-medium italic text-center"><i class="fa-solid fa-circle-notch animate-spin "></i></p>
+            <div
+                class="bg-linkedin-dark text-white h-auto p-2  flex flex-col items-center justify-center px-4 rounded-lg shadow-md">
+                <p id="quote" class="text-sm font-medium italic text-center"><i
+                        class="fa-solid fa-circle-notch animate-spin "></i></p>
                 <p id="author" class="text-xs font-light mt-1 text-gray-300"></p>
             </div>
 
@@ -72,49 +82,115 @@
                 </div>
 
                 <!-- Actions -->
-                <div class="mt-6 flex justify-around ">
-                    <button
-                        class="bg-linkedin-blue text-white px-4 py-2 mr-1 rounded font-medium hover:bg-blue-700 transition-colors flex items-center">
-                        <i class="fa-solid fa-check fa-fade mr-1"></i> Accept 
+                <div class="mt-6 flex flex-col gap-2 justify-center " id="action-buttons">
+                    <button onclick="acceptEmail('itget4010@gmail.com')"
+                        class="  bg-linkedin-blue text-white px-4 py-2 mr-1 rounded font-medium hover:bg-blue-700 transition-colors flex items-center justify-center ">
+                        <i class="fa-solid fa-check fa-fade mr-1"></i> Accept
                     </button>
-                    <button
+                    <button onclick="rejectEmail('itget4010@gmail.com')"
                         class="bg-linkedin-blue text-white px-4 py-2 mr-1 rounded font-medium hover:bg-red-700 transition-colors flex items-center">
                         <i class="fa-solid fa-xmark fa-fade mr-1"></i> Reject
                     </button>
-                    
+
                     <a href="mailto:example@gmail.com" target="_blank">
-                    <button
-                        class="border border-gray-600 text-gray-300 px-4 py-2 rounded font-medium hover:bg-gray-700 transition-colors">
-                        <i class="far fa-envelope mr-2"></i> Inquiry
+                        <button
+                            class="border border-gray-600 text-gray-300 px-4 py-2 rounded font-medium hover:bg-gray-700 transition-colors">
+                            <i class="far fa-envelope mr-2"></i> Inquiry
                     </a>
+                </div>
+
+                <!-- Pending State (Hidden by default) -->
+                <div id="pending-state" class="mt-6 flex-col gap-2 justify-center hidden">
+                    <div
+                        class="bg-gradient-to-r from-yellow-600 to-amber-500 text-white px-4 py-3 rounded font-medium flex items-center justify-center shadow-lg border border-yellow-400">
+                        <i class="fa-solid fa-clock fa-spin-pulse mr-2 text-yellow-200"></i> Processing Request...
+                    </div>
+                    <p class="text-gray-400 text-sm text-center mt-2">Your request is being processed. Please wait.</p>
+                </div>
+
+                <!-- Success State (Hidden by default) -->
+                <div id="success-state" class="mt-6 flex-col gap-2 justify-center hidden">
+                    <div class="bg-green-700 text-white px-4 py-3 rounded font-medium flex items-center justify-center">
+                        <i class="fa-solid fa-check-circle mr-2"></i> <span id="success-message">Request
+                            Processed</span>
+                    </div>
+                </div>
+
+                <!-- Error State (Hidden by default) -->
+                <div id="error-state" class="mt-6 flex-col gap-2 justify-center hidden">
+                    <div class="bg-red-700 text-white px-4 py-3 rounded font-medium flex items-center justify-center">
+                        <i class="fa-solid fa-exclamation-circle mr-2"></i> <span id="error-message">An error
+                            occurred</span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- 2. -->
-        
+
 
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script>
-        // Simple animation for card
-        gsap.from(".bg-gray-800", {
-            duration: 0.8,
-            y: 30,
-            opacity: 0,
-            ease: "power2.out"
-        });
+
+        function acceptEmail(x) {
+            document.getElementById('action-buttons').style.display = 'none';
+            document.getElementById('pending-state').classList.remove('hidden');
+            let formData = new FormData();
+            formData.append('x', x);
+
+            fetch('accept.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    document.getElementById('pending-state').classList.add('hidden');
+                    document.getElementById('success-state').classList.remove('hidden');
+                    document.getElementById('success-message').innerText = 'Application Accepted';
+                })
+                .catch(error => {
+                    console.error('Error accepting email:', error);
+                    document.getElementById('pending-state').classList.add('hidden');
+                    document.getElementById('error-state').classList.remove('hidden');
+                    document.getElementById('error-message').innerText = 'Failed to accept application';
+                });
+        }
+
+        function rejectEmail(x) {
+            document.getElementById('action-buttons').style.display = 'none';
+            document.getElementById('pending-state').classList.remove('hidden');
+            let formData = new FormData();
+            formData.append('x', x);
+
+            fetch('reject.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    document.getElementById('pending-state').classList.add('hidden');
+                    document.getElementById('success-state').classList.remove('hidden');
+                    document.getElementById('success-message').innerText = 'Application Rejected';
+                })
+                .catch(error => {
+                    console.error('Error rejecting email:', error);
+                    document.getElementById('pending-state').classList.add('hidden');
+                    document.getElementById('error-state').classList.remove('hidden');
+                    document.getElementById('error-message').innerText = 'Failed to reject application';
+                });
+        }
 
         fetch('https://dummyjson.com/quotes/random')
-          .then(res => res.json())
-          .then(data => {
-              document.querySelector('#quote').innerText = `"${data.quote}"`;
-              document.querySelector('#author').innerText = `--by ${data.author}`;
-          })
-          .catch(error => console.error('Error fetching quote:', error));
-
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector('#quote').innerText = `"${data.quote}"`;
+                document.querySelector('#author').innerText = `--by ${data.author}`;
+            })
+            .catch(error => console.error('Error fetching quote:', error));
     </script>
 </body>
 
-</html>    
+</html>

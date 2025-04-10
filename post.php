@@ -28,11 +28,14 @@
             p_post = '$post',
             p_date = current_timestamp()
             WHERE p_email = '$email'");
-        echo ' updated ';
+        header("Location: index.php?posted=1");
+        exit;
     } else {
         // Email does not exist, insert new record
         $query = mysqli_query($conn, "INSERT INTO post (p_email, p_name, p_profile, p_resume, p_about, p_post, p_date) 
         VALUES ('$email', '$name', '$profile', '$resume', '$about','$post',current_timestamp())");
+        header("Location: index.php?posted=1");
+        exit;
     }   
 
 
