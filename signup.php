@@ -11,11 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirmpassword = $_POST['confirmpassword'];
     $permission = mysqli_real_escape_string($conn, $_POST['permission']);
 
-    // Confirm password validation
     if ($password != $confirmpassword) {
         $show_error = "Passwords do not match!";
     } else {
-        // Check if user exists
         $user_existSql = "SELECT * FROM user WHERE email = ?";
         $stmt = mysqli_prepare($conn, $user_existSql);
         mysqli_stmt_bind_param($stmt, "s", $email);
@@ -26,16 +24,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($user_exist_num > 0) {
             $show_error = "User already exists";
         } else {
-            // Hash the password
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
-            // Insert new user
             $sql = "INSERT INTO user (name, email, password, status, date, permission) VALUES (?, ?, ?, ?, current_timestamp(), ?)";
             $stmt = mysqli_prepare($conn, $sql);
             $status = ($permission == 0) ? 0 : 1;
             mysqli_stmt_bind_param($stmt, "ssssi", $name, $email, $hash, $status, $permission);
 
-            // profile 
             $query = "INSERT INTO application (a_date, a_email, a_role) VALUES (current_timestamp(), ?, ?)";
             $stmt2 = mysqli_prepare($conn, $query);
             $status2 = ($permission == 0) ? "Applicant" : "Recruiter";

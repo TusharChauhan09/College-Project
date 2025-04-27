@@ -12,7 +12,6 @@ require './PHPMailer/src/SMTP.php';
 if (isset($_POST['x'])) {
     $receiver = $_POST['x'];
 } else {
-    // Send an error response if 'x' is missing
     echo json_encode(["status" => "error", "message" => "No email provided"]);
     exit;
 }
@@ -20,7 +19,6 @@ if (isset($_POST['x'])) {
 try {
     $mail = new PHPMailer(true);
 
-    // SMTP Configuration
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
@@ -29,11 +27,9 @@ try {
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
 
-    // Sender and Recipient
     $mail->setFrom('tusharchauhan0912@gmail.com', 'tushar');
     $mail->addAddress($receiver);
 
-    // Email Content
     $mail->isHTML(true);
     $mail->Subject = 'Application Status Update';
     $mail->Body = '

@@ -14,7 +14,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <script>
-        // Apply theme immediately before page renders to prevent flickering
         (function () {
             const currentTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.classList.toggle('light-mode', currentTheme === 'light');
@@ -30,7 +29,6 @@
             position: relative;
         }
 
-        /* Enhanced animations for aurora effect */
         .aurora {
             position: fixed;
             width: 100vw;
@@ -499,10 +497,8 @@
             const currentThemeIcon = document.getElementById('currentThemeIcon');
             const currentThemeText = document.getElementById('currentThemeText');
 
-            // Get saved theme from localStorage or use default
             const currentTheme = localStorage.getItem('theme') || 'dark';
 
-            // Set initial state of toggle and indicator
             if (currentTheme === 'light') {
                 themeToggle.classList.add('light-mode');
                 document.documentElement.classList.add('light-mode');
@@ -521,21 +517,15 @@
                 document.querySelector('.text-gray-400.text-sm').className = 'text-gray-400 text-sm';
             }
 
-            // Toggle theme on click
             themeToggle.addEventListener('click', function () {
-                // Toggle the light-mode class on toggle button
                 this.classList.toggle('light-mode');
 
-                // Get the current theme
                 const isLightMode = this.classList.contains('light-mode');
 
-                // Save the theme preference to localStorage
                 localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
 
-                // Apply theme to document
                 document.documentElement.classList.toggle('light-mode', isLightMode);
 
-                // Update the current theme indicator
                 if (isLightMode) {
                     currentThemeIcon.innerHTML = '<i class="fa-solid fa-sun"></i>';
                     currentThemeIcon.className = 'w-10 h-10 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 flex items-center justify-center text-white';
@@ -550,14 +540,12 @@
                     document.querySelector('.text-gray-400.text-sm').className = 'text-gray-400 text-sm';
                 }
 
-                // Add a subtle animation effect to show theme change
                 const settingsCard = document.querySelector('.settings-card');
                 settingsCard.style.animation = 'none';
                 setTimeout(() => {
                     settingsCard.style.animation = 'fadeIn 0.4s ease-out forwards';
                 }, 10);
 
-                // Update particles for the new theme
                 if (isLightMode) {
                     if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
                         window.pJSDom[0].pJS.particles.color.value = '#475569';
@@ -575,7 +563,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Initialize particles.js
         particlesJS('particles-js', {
             particles: {
                 number: { value: 50, density: { enable: true, value_area: 800 } },

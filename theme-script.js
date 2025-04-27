@@ -1,4 +1,3 @@
-// Apply theme immediately when script is loaded
 (function () {
   const currentTheme = localStorage.getItem("theme") || "dark";
   document.documentElement.classList.toggle(
@@ -6,15 +5,12 @@
     currentTheme === "light"
   );
 
-  // Add CSS variables for theme colors
   document.documentElement.style.setProperty("--background-dark", "#0f172a");
   document.documentElement.style.setProperty("--background-light", "#dbd6b2");
   document.documentElement.style.setProperty("--text-dark", "#f8fafc");
   document.documentElement.style.setProperty("--text-light", "#1e293b");
 
-  // Apply basic styles for common elements
   if (currentTheme === "light") {
-    // Add light mode styles for body and common elements
     const styleElement = document.createElement("style");
     styleElement.textContent = `
       body { 
@@ -41,9 +37,7 @@
   }
 })();
 
-// Listen for DOM content loaded to initialize theme controls if they exist
 document.addEventListener("DOMContentLoaded", function () {
-  // Add theme toggle listener if toggle exists
   const themeToggle = document.getElementById("themeToggle");
   if (themeToggle) {
     themeToggle.addEventListener("click", function () {
@@ -52,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Function to toggle theme
 function toggleTheme() {
   const currentTheme = localStorage.getItem("theme") || "dark";
   const newTheme = currentTheme === "dark" ? "light" : "dark";
@@ -60,6 +53,5 @@ function toggleTheme() {
   localStorage.setItem("theme", newTheme);
   document.documentElement.classList.toggle("light-mode", newTheme === "light");
 
-  // Reload page to apply all styles properly
   window.location.reload();
 }

@@ -52,7 +52,6 @@ if (isset($_POST['submit'])) {
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <style>
-        /* Enhanced animations and effects */
         .aurora {
             position: fixed;
             width: 100vw;
@@ -353,7 +352,6 @@ if (isset($_POST['submit'])) {
     <script src="./loadApplication.js"></script>
 
     <script>
-        // Initialize particles.js
         particlesJS('particles-js', {
             particles: {
                 number: { value: 50, density: { enable: true, value_area: 800 } },
@@ -392,12 +390,10 @@ if (isset($_POST['submit'])) {
             retina_detect: true
         });
 
-        // Apply theme from localStorage
         function applyTheme() {
             const currentTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.classList.toggle('light-mode', currentTheme === 'light');
 
-            // Adjust particles for light mode
             if (currentTheme === 'light') {
                 if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
                     window.pJSDom[0].pJS.particles.color.value = '#475569';
@@ -405,14 +401,11 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        // Apply theme when page loads
         document.addEventListener('DOMContentLoaded', function () {
             applyTheme();
         });
 
-        // Enhanced GSAP Animations
         document.addEventListener('DOMContentLoaded', function () {
-            // Ensure the profile card is visible before animation
             const profileCard = document.querySelector('.profile-card');
             if (profileCard) {
                 profileCard.style.opacity = '1';
@@ -422,7 +415,6 @@ if (isset($_POST['submit'])) {
             const tl = gsap.timeline({
                 defaults: { ease: 'power3.out' },
                 onStart: function () {
-                    // Ensure elements are visible before animation
                     gsap.set(['.profile-card', '.profile-image-container', '.text-center > *', '.badge', '.update-btn'], {
                         visibility: 'visible',
                         opacity: 1

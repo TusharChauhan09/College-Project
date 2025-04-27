@@ -1,7 +1,6 @@
 <?php
 require './auth.php';
 
-// Create chat_messages table if it doesn't exist
 $create_messages_table = "CREATE TABLE IF NOT EXISTS chat_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sender_email VARCHAR(255),
@@ -15,7 +14,6 @@ if (!mysqli_query($conn, $create_messages_table)) {
     die("Error creating chat_messages table: " . mysqli_error($conn));
 }
 
-// Create chat_likes table if it doesn't exist
 $create_likes_table = "CREATE TABLE IF NOT EXISTS chat_likes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     message_id INT NOT NULL,

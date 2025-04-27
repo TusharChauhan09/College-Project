@@ -1,14 +1,12 @@
 <?php
 require './auth.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['email'])) {
     http_response_code(401);
     echo json_encode(['error' => 'Unauthorized']);
     exit();
 }
 
-// Get POST data
 $data = json_decode(file_get_contents('php://input'), true);
 $message_id = isset($data['message_id']) ? (int) $data['message_id'] : 0;
 $user_email = $_SESSION['email'];
@@ -19,7 +17,6 @@ if ($message_id <= 0) {
     exit();
 }
 
-// Check if message exists
 $check_message = "SELECT id FROM chat_messages WHERE id = $message_id";
 $message_result = mysqli_query($conn, $check_message);
 

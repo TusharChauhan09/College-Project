@@ -144,17 +144,12 @@
 </head>
 
 <body>
-    <!-- Footer -->
     <footer class="footer-gradient text-gray-300 w-full">
-        <!-- Section: Social media -->
         <section class="flex flex-col md:flex-row justify-center md:justify-between p-6 border-b section-border">
-            <!-- Left -->
             <div class="hidden md:block">
                 <span class="text-lg font-medium text-blue-200">Get connected with us on social networks:</span>
             </div>
-            <!-- Left -->
 
-            <!-- Right -->
             <div class="flex space-x-6 mt-4 md:mt-0">
                 <a href="#" class="social-icon text-blue-400 hover:text-blue-300">
                     <i class="fab fa-facebook-f text-xl"></i>
@@ -175,35 +170,28 @@
                     <i class="fab fa-github text-xl"></i>
                 </a>
             </div>
-            <!-- Right -->
         </section>
-        <!-- Section: Social media -->
 
-        <!-- Section: Links  -->
         <section class="container mx-auto text-center md:text-left py-12 px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                 <!-- Company Info -->
                 <div>
                     <h6 class="text-2xl font-bold mb-6 flex items-center text-blue-200">
-                        <i class="fas fa-gem mr-3 text-blue-400 float-animation"></i>Company Name
+                        <i class="fas fa-gem mr-3 text-blue-400 float-animation"></i>Jobify
                     </h6>
-                    <p class="text-gray-400 leading-relaxed">Here you can use rows and columns to organize your footer
-                        content. Lorem ipsum dolor sit amet,
-                        consectetur adipisicing elit.</p>
+                    
                 </div>
 
-                <!-- Products -->
                 <div>
                     <h6 class="text-2xl font-bold mb-6 text-blue-200">Products</h6>
                     <ul class="space-y-3">
-                        <li><a href="#" class="footer-link text-gray-400 hover:text-blue-300">Angular</a></li>
-                        <li><a href="#" class="footer-link text-gray-400 hover:text-blue-300">React</a></li>
-                        <li><a href="#" class="footer-link text-gray-400 hover:text-blue-300">Vue</a></li>
-                        <li><a href="#" class="footer-link text-gray-400 hover:text-blue-300">Laravel</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-blue-300">Home</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-blue-300">About</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-blue-300">Profile</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-blue-300">chat</a></li>
                     </ul>
                 </div>
 
-                <!-- Useful Links -->
                 <div>
                     <h6 class="text-2xl font-bold mb-6 text-blue-200">Useful Links</h6>
                     <ul class="space-y-3">
@@ -214,7 +202,6 @@
                     </ul>
                 </div>
 
-                <!-- Contact -->
                 <div>
                     <h6 class="text-2xl font-bold mb-6 text-blue-200">Contact</h6>
                     <ul class="space-y-3">
@@ -242,20 +229,15 @@
                 </div>
             </div>
         </section>
-        <!-- Section: Links  -->
 
-        <!-- Copyright -->
         <div class="text-center p-6 copyright-bg text-gray-400">
             <p>&copy; 2023 Copyright:
-                <a class="text-blue-400 font-bold hover:text-blue-300 transition-colors" href="#">YourCompany.com</a>
+                <a class="text-blue-400 font-bold hover:text-blue-300 transition-colors" href="#">Jobify</a>
             </p>
         </div>
-        <!-- Copyright -->
     </footer>
-    <!-- Footer -->
 
     <script>
-        // Apply theme from localStorage on footer
         document.addEventListener('DOMContentLoaded', function () {
             const currentTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.classList.toggle('light-mode', currentTheme === 'light');

@@ -13,7 +13,6 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/kute.js@2.1.2/dist/kute.min.js"></script>
     <style>
-        /* Light and dark mode styles */
         :root {
             --bg-color-dark: #000000;
             --bg-color-light: #dbd6b2;
@@ -193,24 +192,8 @@
     echo '<br><br><br>';
     ?>
 
-    <!-- <div class=" relative  ">
-        <div class="container ">
-            <img class=" w-full h-200"
-                src="https://images.unsplash.com/photo-1624139283078-74a0492f2ee3?q=80&w=1227&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="">
-        </div>
-        <div class=" text-white absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 transform ">
-            <div class=" flex flex-col justify-center items-center">
-                <h1 class=" text-6xl text-white font-bold ">Be Who You</h1>
-                <h1 class=" text-6xl text-white font-bold  pb-4">Really Are</h1>
-                <pre class="pb-4 ">Cache your next opportunity and unlock a brighter career!</pre>
-                <a class="cursor-pointer bg-gray-800 hover:bg-gray-600 transition-all ease-in delay-75  text-white rounded-3xl p-5 "
-                    href="/new">Get Started</a>
-            </div>
-        </div>
-    </div> -->
+    
 
-    <!-- Responsive banner with mobile optimizations -->
     <div class="relative w-full">
         <div class="w-full">
             <img class="w-full h-64 md:h-96 lg:h-screen object-cover"
@@ -244,7 +227,6 @@ unlock a brighter career!</pre>
                     </div>
                 </div>
             </div>
-            <!-- Name and IDs -->
             <div class="text-center mb-6">
                 <h2
                     class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-2">
@@ -264,7 +246,6 @@ unlock a brighter career!</pre>
             </div>
 
 
-            <!-- Role -->
             <div class="mb-6">
                 <h3
                     class="text-lg font-semibold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
@@ -274,15 +255,12 @@ unlock a brighter career!</pre>
                 </div>
             </div>
 
-            <!-- Social Links -->
             <div class="pt-4 border-t border-gray-700/30">
                 <div class="social-links flex justify-center space-x-6">
-                    <!-- GitHub -->
                     <a href="https://github.com/tusharchauhan09" class="text-gray-400 hover:text-white">
                         <i class="fab fa-github text-xl"></i>
                     </a>
 
-                    <!-- Twitter -->
                     <a href="https://twitter.com/johndoe" class="text-gray-400 hover:text-white">
                         <i class="fab fa-twitter text-xl"></i>
                     </a>
@@ -290,7 +268,6 @@ unlock a brighter career!</pre>
             </div>
         </div>
 
-        <!-- 2 -->
         <div class="team-card rounded-xl shadow-xl overflow-hidden max-w-sm w-full text-gray-100 p-6">
             <div class="flex justify-center mb-6">
                 <div
@@ -303,8 +280,7 @@ unlock a brighter career!</pre>
                     </div>
                 </div>
             </div>
-            <!-- Name and IDs -->
-            <div class="text-center mb-6">
+                <div class="text-center mb-6">
                 <h2
                     class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-2">
                     Vansh Tyagi</h2>
@@ -323,7 +299,6 @@ unlock a brighter career!</pre>
             </div>
 
 
-            <!-- Role -->
             <div class="mb-6">
                 <h3
                     class="text-lg font-semibold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
@@ -333,15 +308,12 @@ unlock a brighter career!</pre>
                 </div>
             </div>
 
-            <!-- Social Links -->
             <div class="pt-4 border-t border-gray-700/30">
                 <div class="social-links flex justify-center space-x-6">
-                    <!-- GitHub -->
                     <a href="https://github.com/tusharchauhan09" class="text-gray-400 hover:text-white">
                         <i class="fab fa-github text-xl"></i>
                     </a>
 
-                    <!-- Twitter -->
                     <a href="https://twitter.com/johndoe" class="text-gray-400 hover:text-white">
                         <i class="fab fa-twitter text-xl"></i>
                     </a>
@@ -361,7 +333,6 @@ unlock a brighter career!</pre>
                     </div>
                 </div>
             </div>
-            <!-- Name and IDs -->
             <div class="text-center mb-6">
                 <h2
                     class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-2">
@@ -381,7 +352,6 @@ unlock a brighter career!</pre>
             </div>
 
 
-            <!-- Role -->
             <div class="mb-6">
                 <h3
                     class="text-lg font-semibold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
@@ -391,15 +361,12 @@ unlock a brighter career!</pre>
                 </div>
             </div>
 
-            <!-- Social Links -->
             <div class="pt-4 border-t border-gray-700/30">
                 <div class="social-links flex justify-center space-x-6">
-                    <!-- GitHub -->
                     <a href="https://github.com/tusharchauhan09" class="text-gray-400 hover:text-white">
                         <i class="fab fa-github text-xl"></i>
                     </a>
 
-                    <!-- Twitter -->
                     <a href="https://twitter.com/johndoe" class="text-gray-400 hover:text-white">
                         <i class="fab fa-twitter text-xl"></i>
                     </a>
@@ -407,7 +374,6 @@ unlock a brighter career!</pre>
             </div>
         </div>
 
-        <!-- 4 -->
         <div class="team-card rounded-xl shadow-xl overflow-hidden max-w-sm w-full text-gray-100 p-6">
             <div class="flex justify-center mb-6">
                 <div
@@ -420,7 +386,6 @@ unlock a brighter career!</pre>
                     </div>
                 </div>
             </div>
-            <!-- Name and IDs -->
             <div class="text-center mb-6">
                 <h2
                     class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-2">
@@ -440,7 +405,6 @@ unlock a brighter career!</pre>
             </div>
 
 
-            <!-- Role -->
             <div class="mb-6">
                 <h3
                     class="text-lg font-semibold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
@@ -450,14 +414,12 @@ unlock a brighter career!</pre>
                 </div>
             </div>
 
-            <!-- Social Links -->
             <div class="pt-4 border-t border-gray-700/30">
                 <div class="social-links flex justify-center space-x-6">
                     <a href="https://github.com/tusharchauhan09" class="text-gray-400 hover:text-white">
                         <i class="fab fa-github text-xl"></i>
                     </a>
 
-                    <!-- Twitter -->
                     <a href="https://twitter.com/johndoe" class="text-gray-400 hover:text-white">
                         <i class="fab fa-twitter text-xl"></i>
                     </a>
@@ -471,7 +433,6 @@ unlock a brighter career!</pre>
     ?>
 
     <script>
-        // Apply theme from localStorage
         document.addEventListener('DOMContentLoaded', function () {
             const currentTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.classList.toggle('light-mode', currentTheme === 'light');

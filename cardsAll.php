@@ -15,7 +15,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Light mode styles for cards */
         html.light-mode .bg-gray-900 {
             background-color: #dbd6b2;
         }
@@ -64,14 +63,11 @@
 
     echo '<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">';
 
-    // Get search query if it exists
     $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
 
-    // Modify query based on search
     if (!empty($search)) {
         $res = mysqli_query($conn, "SELECT * FROM post WHERE p_post LIKE '%$search%'");
 
-        // If no results found
         if (mysqli_num_rows($res) == 0) {
             echo '<div class="col-span-3 text-center p-10">
             <div class="bg-gray-800 rounded-lg shadow-card p-8">
@@ -216,10 +212,8 @@
 
     echo '</div>';
 
-    // Include notifications.js script
     echo '<script src="./notifications.js"></script>';
 
-    // Add the JavaScript for card animations and other functionality
     echo '<script>
 document.addEventListener("DOMContentLoaded", function() {
     const cards = document.querySelectorAll(".card-animate");
@@ -377,7 +371,6 @@ function removePendingState(email) {
 }
 </script>';
 
-    // Add the CSS styles
     echo '<style>
 /* Add these styles for animations */
 .card-animate {

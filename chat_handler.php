@@ -1,10 +1,8 @@
 <?php
 require './auth.php';
 
-// Function to create tables if they don't exist
 function createTables($conn)
 {
-    // Create chat_messages table
     $create_messages_table = "CREATE TABLE IF NOT EXISTS chat_messages (
         id INT AUTO_INCREMENT PRIMARY KEY,
         sender_email VARCHAR(255),
@@ -18,7 +16,6 @@ function createTables($conn)
         return "Error creating chat_messages table: " . mysqli_error($conn);
     }
 
-    // Create chat_likes table
     $create_likes_table = "CREATE TABLE IF NOT EXISTS chat_likes (
         id INT AUTO_INCREMENT PRIMARY KEY,
         message_id INT NOT NULL,
@@ -35,10 +32,8 @@ function createTables($conn)
     return "Tables created successfully!";
 }
 
-// Function to get messages
 function getMessages($conn, $last_id = 0)
 {
-    // Get new messages with like counts and user's like status
     $query = "SELECT m.*, 
               COUNT(l.id) as like_count,
               EXISTS(SELECT 1 FROM chat_likes WHERE message_id = m.id AND user_email = '{$_SESSION['email']}') as is_liked
@@ -71,7 +66,6 @@ function getMessages($conn, $last_id = 0)
     return $messages;
 }
 
-// Handle different types of requests
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Check if this is a table creation request
     if (isset($_GET['action']) && $_GET['action'] === 'create_tables') {
@@ -79,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit();
     }
 
-    // Otherwise, handle message retrieval
     if (!isset($_SESSION['email'])) {
         http_response_code(401);
         echo json_encode(['error' => 'Unauthorized']);

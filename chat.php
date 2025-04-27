@@ -1,13 +1,11 @@
 <?php
 require './auth.php';
 
-// Redirect if not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
 }
 
-// Create chat_messages table if it doesn't exist
 $create_table = "CREATE TABLE IF NOT EXISTS chat_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sender_email VARCHAR(255),
@@ -21,7 +19,6 @@ if (!mysqli_query($conn, $create_table)) {
     die("Error creating chat table: " . mysqli_error($conn));
 }
 
-// Get current user's name
 $email = $_SESSION['email'];
 $result = mysqli_query($conn, "SELECT name FROM user WHERE email = '$email'");
 if (!$result) {
@@ -30,7 +27,6 @@ if (!$result) {
 $user = mysqli_fetch_assoc($result);
 $current_user_name = $user['name'];
 
-// Handle message submission
 if (isset($_POST['message']) && !empty($_POST['message'])) {
     $message = mysqli_real_escape_string($conn, $_POST['message']);
     $insert_query = "INSERT INTO chat_messages (sender_email, sender_name, message) 
@@ -51,7 +47,7 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
     <link href="src/output.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script>
-        // Apply theme immediately before page renders to prevent flickering
+        
         (function () {
             const currentTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.classList.toggle('light-mode', currentTheme === 'light');
@@ -851,7 +847,7 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
     <div class="relative z-10 container mx-auto px-4 py-24 flex justify-center">
         <div
             class="chat-container bg-gray-900/80 backdrop-blur-xl border border-gray-700/30 rounded-3xl p-8 w-full max-w-[90%] xl:max-w-[80%] 2xl:max-w-[70%] shadow-2xl mt-10">
-            <!-- Chat Header -->
+            
             <div
                 class="border-b border-gray-700/30 p-4 sticky top-0 backdrop-blur-lg bg-gray-800/90 z-10 rounded-t-3xl">
                 <div class="flex items-center justify-end">
@@ -864,13 +860,13 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
                 </div>
             </div>
 
-            <!-- Add the new post button -->
+            
             <button class="new-post-button m-5 " id="newPostButton">
                 <i class="fas fa-feather"></i>
                 New Post
             </button>
 
-            <!-- Add the post form overlay -->
+            
             <div class="post-form-overlay" id="postFormOverlay">
                 <div class="post-form-container">
                     <div class="post-form-header">
@@ -901,7 +897,7 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
                 </div>
             </div>
 
-            <!-- Messages Container -->
+            
             <div class="message-container" id="messageContainer">
                 <?php
                 $messages_query = "SELECT m.*, 
@@ -975,7 +971,7 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
         const postButton = messageForm.querySelector('button[type="submit"]');
         let lastMessageId = 0;
 
-        // Create tables on page load
+        
         async function initializeTables() {
             try {
                 const response = await fetch('chat_handler.php?action=create_tables');
@@ -986,17 +982,15 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
             }
         }
 
-        // Initialize tables when page loads
+        
         initializeTables();
 
-        // Get initial last message ID
         const messages = document.querySelectorAll('.message');
         if (messages.length > 0) {
             const lastMessage = messages[messages.length - 1];
             lastMessageId = parseInt(lastMessage.dataset.messageId) || 0;
         }
 
-        // Character count update
         messageInput.addEventListener('input', () => {
             const remaining = 280 - messageInput.value.length;
             characterCount.textContent = remaining;
@@ -1022,18 +1016,15 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
             }
         });
 
-        // Auto-resize textarea
         messageInput.addEventListener('input', function () {
             this.style.height = 'auto';
             this.style.height = (this.scrollHeight) + 'px';
         });
 
-        // Scroll to bottom of messages
         function scrollToBottom() {
             messageContainer.scrollTop = messageContainer.scrollHeight;
         }
 
-        // Format timestamp
         function formatTime(timestamp) {
             const date = new Date(timestamp);
             return date.toLocaleString('en-US', {
@@ -1045,7 +1036,6 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
             });
         }
 
-        // Create message HTML
         function createMessageHTML(message) {
             const isLiked = message.is_liked ? 'liked' : '';
             const heartIcon = message.is_liked ? 'fas' : 'far';
@@ -1086,7 +1076,6 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
             `;
         }
 
-        // Toggle like
         async function toggleLike(messageId) {
             try {
                 const response = await fetch('toggle_like.php', {
@@ -1116,7 +1105,6 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
             }
         }
 
-        // Fetch new messages
         async function fetchNewMessages() {
             try {
                 const response = await fetch(`chat_handler.php?last_id=${lastMessageId}`);
@@ -1134,52 +1122,44 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
             }
         }
 
-        // Initial scroll to bottom
         scrollToBottom();
 
-        // Add new JavaScript for handling the post form visibility
         const newPostButton = document.getElementById('newPostButton');
         const postFormOverlay = document.getElementById('postFormOverlay');
         const closeFormButton = document.getElementById('closeFormButton');
 
-        // Show the post form
         newPostButton.addEventListener('click', () => {
             postFormOverlay.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-            messageInput.focus(); // Focus the input
+            document.body.style.overflow = 'hidden'; 
+            messageInput.focus(); 
         });
 
-        // Hide the post form
         function hidePostForm() {
             postFormOverlay.style.display = 'none';
-            document.body.style.overflow = ''; // Restore scrolling
-            messageInput.value = ''; // Clear the input
-            characterCount.textContent = '280'; // Reset character count
-            postButton.disabled = true; // Disable post button
+            document.body.style.overflow = ''; 
+            messageInput.value = '';
+            characterCount.textContent = '280'; 
+            postButton.disabled = true;
             postButton.classList.remove('active');
         }
 
-        // Close form when clicking close button
         closeFormButton.addEventListener('click', (e) => {
             e.preventDefault();
             hidePostForm();
         });
 
-        // Close form when clicking overlay
         postFormOverlay.addEventListener('click', (e) => {
             if (e.target === postFormOverlay) {
                 hidePostForm();
             }
         });
 
-        // Close form when pressing Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && postFormOverlay.style.display === 'block') {
                 hidePostForm();
             }
         });
 
-        // Update form submission to hide the form after posting
         messageForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const message = messageInput.value.trim();
@@ -1195,7 +1175,7 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
                     });
 
                     if (response.ok) {
-                        hidePostForm(); // Hide the form after successful post
+                        hidePostForm(); 
                         await fetchNewMessages();
                     }
                 } catch (error) {
@@ -1204,13 +1184,11 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
             }
         });
 
-        // Add loading indicator
         const loadingIndicator = document.createElement('div');
         loadingIndicator.className = 'hidden fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg';
         loadingIndicator.innerHTML = '<i class="fas fa-sync fa-spin mr-2"></i> Updating...';
         document.body.appendChild(loadingIndicator);
 
-        // Show loading indicator when fetching
         let loadingTimeout;
         const originalFetch = window.fetch;
         window.fetch = async (...args) => {
@@ -1226,7 +1204,6 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
             }
         };
 
-        // Add hover effects to profile images
         document.querySelectorAll('.profile-image').forEach(image => {
             image.addEventListener('mouseenter', () => {
                 image.style.transform = 'scale(1.05)';
@@ -1239,7 +1216,6 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Initialize particles.js
         particlesJS('particles-js', {
             particles: {
                 number: { value: 50, density: { enable: true, value_area: 800 } },
@@ -1278,7 +1254,6 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
             retina_detect: true
         });
 
-        // Adjust particles for light mode
         function applyParticlesTheme() {
             const currentTheme = localStorage.getItem('theme') || 'dark';
             if (currentTheme === 'light') {
@@ -1288,7 +1263,6 @@ if (isset($_POST['message']) && !empty($_POST['message'])) {
             }
         }
 
-        // Apply theme to particles when page loads
         document.addEventListener('DOMContentLoaded', function () {
             applyParticlesTheme();
         });

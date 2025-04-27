@@ -156,13 +156,11 @@ class NotificationSystem {
     content.appendChild(iconDiv);
     content.appendChild(messageDiv);
     
-    // Create close button
     const closeBtn = document.createElement('div');
     closeBtn.className = 'notification-close';
     closeBtn.innerHTML = '&times;';
     closeBtn.addEventListener('click', () => this.close(notification));
     
-    // Create progress bar
     const progress = document.createElement('div');
     progress.className = 'notification-progress';
     
@@ -189,15 +187,12 @@ class NotificationSystem {
   }
   
   close(notification) {
-    // Clear timeout if it exists
     if (notification.timeout) {
       clearTimeout(notification.timeout);
     }
     
-    // Animate out
     notification.classList.remove('show');
     
-    // Remove after animation
     setTimeout(() => {
       if (notification.parentNode) {
         notification.parentNode.removeChild(notification);
@@ -218,10 +213,8 @@ class NotificationSystem {
   }
 }
 
-// Initialize the notification system
 const notifications = new NotificationSystem();
 
-// Add keyframes for progress bar animation
 const style = document.createElement('style');
 style.textContent = `
   @keyframes progress-shrink {

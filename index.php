@@ -12,11 +12,9 @@ require './auth.php';
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <!-- Theme support -->
   <script src="./theme-script.js"></script>
 
   <script>
-    // Apply theme immediately before page renders to prevent flickering
     (function () {
       const currentTheme = localStorage.getItem('theme') || 'dark';
       document.documentElement.classList.toggle('light-mode', currentTheme === 'light');
@@ -197,7 +195,6 @@ require './auth.php';
       retina_detect: true
     });
 
-    // Adjust particles for light mode
     function applyTheme() {
       const currentTheme = localStorage.getItem('theme') || 'dark';
       if (currentTheme === 'light') {
@@ -207,7 +204,6 @@ require './auth.php';
       }
     }
 
-    // Apply theme when page loads
     document.addEventListener('DOMContentLoaded', function () {
       applyTheme();
     });

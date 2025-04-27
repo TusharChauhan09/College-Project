@@ -202,7 +202,6 @@ if (isset($_SESSION['email'])) {
           </div>
         </a>
 
-        <!-- Profile Link with Image -->
         <a href="/new/profile.php" class="group">
           <div
             class="profile-ring w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-gray-600/30 group-hover:border-blue-500/60 transition-all duration-300 shadow-lg shadow-black/20 backdrop-blur-xl">
@@ -222,13 +221,11 @@ if (isset($_SESSION['email'])) {
           </div>
         </a>
 
-        <!-- Logout button with enhanced gradient hover -->
         <a class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-red-500/20 hover:to-orange-500/20 text-gray-300 hover:text-white transition-all duration-300 shadow-lg shadow-black/20 backdrop-blur-2xl border border-gray-600/20"
           href="logout.php" title="Logout">
           <i class="fa-solid fa-sign-out-alt transition-transform duration-300 hover:scale-110"></i>
         </a>
 
-        <!-- Mobile Menu Button - only visible on small screens -->
         <button
           class="md:hidden p-2.5 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-purple-500/20 text-gray-300 hover:text-white focus:outline-none transition-all duration-300 backdrop-blur-2xl border border-gray-600/20"
           id="mobile-menu-button">
@@ -237,11 +234,9 @@ if (isset($_SESSION['email'])) {
       </div>
     </div>
 
-    <!-- Mobile Navigation Menu with enhanced glass effect -->
     <div id="mobile-menu"
       class="hidden md:hidden bg-gray-900/90 backdrop-blur-2xl rounded-b-2xl mx-4 pb-4 px-4 shadow-2xl mt-1 border border-gray-700/20">
       <div class="pt-4 pb-3 space-y-4">
-        <!-- Mobile Navigation Links - Visible in hamburger menu on mobile only -->
         <div class="border-b border-gray-700/50 pb-2 mb-3 mobile-only">
           <h3 class="text-sm uppercase text-gray-400 font-semibold mb-3 px-2">Navigation</h3>
           <a class="block text-gray-200 hover:text-white font-medium transition-all duration-300 relative group backdrop-blur-md px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-indigo-600/20 hover:to-indigo-500/20"
@@ -262,7 +257,6 @@ if (isset($_SESSION['email'])) {
           </a>
         </div>
 
-        <!-- Mobile Search Form -->
         <form id="mobileSearchForm" method="GET" action="" class="relative mt-4">
           <input
             class="w-full pl-10 pr-5 py-3 rounded-full bg-white/5 text-gray-200 border border-gray-600/30 focus:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 placeholder-gray-400 transition-all duration-300 backdrop-blur-2xl hover:bg-white/10 shadow-inner"
@@ -285,7 +279,6 @@ if (isset($_SESSION['email'])) {
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="./notifications.js"></script>
   <script>
-    // Mobile menu toggle without animation
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
 
@@ -295,30 +288,24 @@ if (isset($_SESSION['email'])) {
       });
     }
 
-    // Check for URL parameters to show notifications
     document.addEventListener('DOMContentLoaded', function () {
       const urlParams = new URLSearchParams(window.location.search);
 
-      // Check for post success parameter
       if (urlParams.has('posted')) {
         notifications.success('Your post has been published successfully!');
 
-        // Clean URL by removing the parameter
         const newUrl = window.location.pathname + window.location.hash;
         window.history.replaceState({}, document.title, newUrl);
       }
 
-      // Apply theme from local storage
       applyTheme();
     });
 
-    // Function to apply theme
     function applyTheme() {
       const currentTheme = localStorage.getItem('theme') || 'dark';
       document.documentElement.classList.toggle('light-mode', currentTheme === 'light');
     }
 
-    // Apply theme immediately to fix flashing issue
     (function () {
       const currentTheme = localStorage.getItem('theme') || 'dark';
       document.documentElement.classList.toggle('light-mode', currentTheme === 'light');

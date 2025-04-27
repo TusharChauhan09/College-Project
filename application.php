@@ -5,7 +5,6 @@ require './auth.php';
 <div
     class="application-form bg-gradient-to-br from-gray-900/80 to-gray-800/80 p-6 rounded-3xl border border-gray-700/30 backdrop-blur-xl shadow-2xl max-w-md mx-auto mt-12">
     <form action="profile.php" method="POST" enctype="multipart/form-data" class="space-y-6">
-        <!-- Profile Image Upload -->
         <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-300">Profile Image</label>
             <div class="mt-1 flex items-center justify-center w-full">
@@ -21,7 +20,6 @@ require './auth.php';
             </div>
         </div>
 
-        <!-- Resume Upload -->
         <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-300">Resume</label>
             <div class="mt-1 flex items-center justify-center w-full">
@@ -38,7 +36,6 @@ require './auth.php';
             </div>
         </div>
 
-        <!-- Post Selection -->
         <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-300">Position</label>
             <select name="post" required
@@ -52,7 +49,6 @@ require './auth.php';
             </select>
         </div>
 
-        <!-- About Section -->
         <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-300">About You</label>
             <textarea name="about" rows="4" required
@@ -60,7 +56,6 @@ require './auth.php';
                 placeholder="Tell us about yourself..."></textarea>
         </div>
 
-        <!-- Submit Button -->
         <div class="flex justify-end space-x-4">
             <button type="submit" name="submit"
                 class="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium rounded-xl shadow-lg transition-all duration-300 hover:from-purple-500 hover:to-pink-500 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
@@ -71,7 +66,6 @@ require './auth.php';
 </div>
 
 <style>
-    /* Light mode support */
     html.light-mode .application-form {
         background: linear-gradient(to bottom right, rgba(219, 214, 178, 0.8), rgba(197, 193, 160, 0.8));
         border-color: rgba(197, 193, 160, 0.5);
@@ -100,12 +94,10 @@ require './auth.php';
         color: var(--text-primary-light);
     }
 
-    /* File input styling */
     input[type="file"]::file-selector-button {
         display: none;
     }
 
-    /* Animations */
     .application-form {
         animation: fadeIn 0.5s ease-out;
     }
@@ -122,13 +114,11 @@ require './auth.php';
         }
     }
 
-    /* Focus states */
     .application-form select:focus,
     .application-form textarea:focus {
         box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
     }
 
-    /* Hover states */
     .application-form label:hover {
         transform: translateY(-1px);
     }
