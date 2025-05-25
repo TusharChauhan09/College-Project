@@ -1,0 +1,135 @@
+/* Optimized CSS for gradients and blur effects */
+/* This file contains optimized implementations of Tailwind gradients and blur effects */
+
+/* Optimized gradients - using CSS variables for better performance */
+:root {
+  --gradient-blue-purple: linear-gradient(to right, #3b82f6, #8b5cf6);
+  --gradient-blue-indigo: linear-gradient(to right, #3b82f6, #6366f1);
+  --gradient-purple-pink: linear-gradient(to right, #8b5cf6, #ec4899);
+  --gradient-yellow-amber: linear-gradient(to right, #eab308, #f59e0b);
+  --gradient-slate-purple: linear-gradient(to right, #0f172a, #7e22ce, #0f172a);
+  --gradient-gray-dark: linear-gradient(
+    to bottom right,
+    #111827,
+    #1f2937,
+    #111827
+  );
+}
+
+/* Optimized gradient classes */
+.gradient-blue-purple {
+  background-image: var(--gradient-blue-purple);
+}
+
+.gradient-blue-indigo {
+  background-image: var(--gradient-blue-indigo);
+}
+
+.gradient-purple-pink {
+  background-image: var(--gradient-purple-pink);
+}
+
+.gradient-yellow-amber {
+  background-image: var(--gradient-yellow-amber);
+}
+
+.gradient-slate-purple {
+  background-image: var(--gradient-slate-purple);
+}
+
+.gradient-gray-dark {
+  background-image: var(--gradient-gray-dark);
+}
+
+/* Optimized blur effects - using hardware acceleration */
+.blur-optimized {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transform: translateZ(0);
+  will-change: transform, backdrop-filter;
+}
+
+.blur-optimized-sm {
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transform: translateZ(0);
+  will-change: transform, backdrop-filter;
+}
+
+.blur-optimized-lg {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  transform: translateZ(0);
+  will-change: transform, backdrop-filter;
+}
+
+/* Optimized hover effects */
+.hover-gradient-blue-purple:hover {
+  background-image: var(--gradient-blue-purple);
+}
+
+.hover-gradient-blue-indigo:hover {
+  background-image: var(--gradient-blue-indigo);
+}
+
+/* Optimized text gradients */
+.text-gradient-blue-purple {
+  background-image: var(--gradient-blue-purple);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Optimized semi-transparent backgrounds */
+.bg-black-80 {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.bg-gray-800-80 {
+  background-color: rgba(31, 41, 55, 0.8);
+}
+
+.bg-gray-900-80 {
+  background-color: rgba(17, 24, 39, 0.8);
+}
+
+/* Optimized animation classes */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optimized button effects */
+.btn-glow-optimized {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-glow-optimized::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 0.5s;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+}
+
+.btn-glow-optimized:hover::after {
+  transform: scale(50);
+  opacity: 0;
+}
